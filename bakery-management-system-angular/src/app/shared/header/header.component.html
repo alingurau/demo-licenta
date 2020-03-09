@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+  <a mat-button class="navbar-brand" routerLink="/">Bakery Management System</a>
+  <button class="navbar-toggler" type="button" (click)="toggleSidebar()">
+    <i class="fa fa-bars text-muted" aria-hidden="true"></i>
+  </button>
+  <div class="navbar-nav flex-row ml-auto d-none d-lg-flex">
+    <div class="mr-2">
+      <app-theme-picker></app-theme-picker>
+    </div>
+    <button mat-button
+      class="profile-actions"
+      [matMenuTriggerFor]="menu">
+      <i class="fa fa-user"></i> {{ user.firstName }} {{ user.lastName }}
+    </button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item
+        routerLink="/my-account/edit">
+        <i class="fa fa-fw fa-user"></i> My profile
+      </a>
+      <a mat-menu-item
+        (click)="onLogout()">
+        <i class="fa fa-fw fa-power-off"></i> Log out
+      </a>
+    </mat-menu>
+  </div>
+</nav>

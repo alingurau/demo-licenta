@@ -1,0 +1,97 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+      <h2>Order</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <form
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm">
+        <mat-form-field class="w-100">
+          <input required
+            matInput
+            type="text"
+            id="input-name"
+            name="name"
+            [(ngModel)]="orderEntity.name"
+            placeholder="Name"
+            #name="ngModel">
+          <mat-error
+            *ngIf="name.touched && !name.valid">
+            Name field is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input required
+            matInput
+            type="text"
+            id="input-description"
+            name="description"
+            [(ngModel)]="orderEntity.description"
+            placeholder="Description"
+            #description="ngModel">
+          <mat-error
+            *ngIf="description.touched && !description.valid">
+            Description field is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input matInput
+                placeholder="Entry Date"
+                required
+                [satDatepicker]="picker"
+                [value]="date"
+                disabled
+                (dateChange)="onDateChange($event)">
+              <sat-datepicker #picker [rangeMode]="true" disabled="false">
+              </sat-datepicker>
+              <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input matInput
+                placeholder="Due Date"
+                required
+                [satDatepicker]="picker"
+                [value]="date"
+                disabled
+                (dateChange)="onDateChange($event)">
+              <sat-datepicker #picker [rangeMode]="true" disabled="false">
+              </sat-datepicker>
+              <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+
+        <div class="form-row">
+          <div class="p-2">
+            <button
+              mat-raised-button color="primary"
+              type="submit"
+              [disabled]="!f.valid">Save Order</button>
+          </div>
+          <div class="p-2">
+            <button
+              mat-raised-button
+              type="button"
+              routerLink="/orders">
+              Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

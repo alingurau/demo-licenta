@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables';
+@import 'bootstrap/bootstrap';
+@import 'reset';
+@import 'material_icons';
+@import 'spinner';
+@import 'rtl';
+@import 'responsive';
+@import 'general';
+@import '~@ng-select/ng-select/themes/default.theme.css';
+@import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~saturn-datepicker/bundle.css';
+
+@include mat-core();
+@import 'theme_default';
+@import 'theme_light';
+@import 'theme_dark';
+@import 'theme_natural';
+
+@import 'utils';
+
+.default-theme {
+  @include angular-material-theme($theme-default);
+  @include app-component-theme($theme-default);
+}
+
+.light-theme {
+  @include angular-material-theme($theme-light);
+  @include app-component-theme($theme-light);
+}
+
+.dark-theme {
+  @include angular-material-theme($theme-dark);
+  @include app-component-theme($theme-dark);
+}
+
+.natural-theme {
+  @include angular-material-theme($theme-natural);
+  @include app-component-theme($theme-natural);
+}

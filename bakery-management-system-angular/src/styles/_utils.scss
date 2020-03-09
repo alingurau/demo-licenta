@@ -1,0 +1,69 @@
+@mixin app-component-theme($theme){
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+  $sidebar-and-header-background: mat-color($background, card);
+  $sidebar-and-header-foreground: mat-color($foreground, text);
+
+  button.theme-picker-selector {
+    background: darken($sidebar-and-header-background, 15%)!important;
+  }
+
+  .sidebar {
+    background-color: darken($sidebar-and-header-background, 10%)!important;
+    .list-group {
+      a.list-group-item {
+        background-color: darken($sidebar-and-header-background, 10%)!important;
+        color: $sidebar-and-header-foreground!important;
+      }
+      a:hover {
+        background: darken($sidebar-and-header-background, 15%)!important;
+        color: $sidebar-and-header-foreground!important;
+      }
+      a.router-link-active {
+        background: darken($sidebar-and-header-background, 15%)!important;
+        color: $sidebar-and-header-foreground!important;
+      }
+    }
+  }
+
+  .navbar {
+    background-color: darken($sidebar-and-header-background, 10%)!important;
+    .navbar-brand {
+      color: $sidebar-and-header-foreground!important;
+    }
+    .nav-item > a {
+      color: darken($sidebar-and-header-foreground, 15%)!important;
+      &:hover {
+        color: $sidebar-and-header-foreground!important;
+      }
+    }
+    .navbar-nav {
+      .profile-actions {
+        color: $sidebar-and-header-foreground!important;
+      }
+    }
+  }
+
+  .main-container {
+    background: $sidebar-and-header-background!important;
+  }
+
+  a:not(.mat-button):not(.mat-flat-button):not(.mat-raised-button):not(.mat-fab):not(.mat-mini-fab):not([mat-list-item]) {
+    color: $sidebar-and-header-foreground!important;
+  }
+
+  h1, h2, h3, h4, h5, h6, p {
+    color: $sidebar-and-header-foreground!important;
+  }
+
+  .mat-input-element {
+    color: darken($sidebar-and-header-foreground, 5%)!important;
+  }
+
+  .login-page {
+    background: darken($sidebar-and-header-background, 15%)!important;
+  }
+}

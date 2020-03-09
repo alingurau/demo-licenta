@@ -1,0 +1,170 @@
+<div class="container-fluid"
+  *ngIf="salesmanEntity">
+  <div class="row">
+    <div class="col-xl-12">
+      <div [ngSwitch]="editStatus">
+        <h2 *ngSwitchCase="1">My account</h2>
+        <h2 *ngSwitchCase="2">Edit {{ salesmanName }}</h2>
+        <h2 *ngSwitchCase="3">Create Salesman</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <form
+        (ngSubmit)="onSubmit()"
+        #f="ngForm">
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                type="text"
+                id="input-email"
+                [(ngModel)]="salesmanEntity.username"
+                name="email"
+                placeholder="Email"
+                email
+                required
+                [disabled]="editStatus != status.newContent"
+                #email="ngModel">
+              <mat-error
+                *ngIf="email.touched && !email.valid">
+                Please, add a correct email address!
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                id="input-fname"
+                type="text"
+                [(ngModel)]="salesmanEntity.firstName"
+                name="firstName"
+                placeholder="First Name">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                id="input-lname"
+                type="text"
+                [(ngModel)]="salesmanEntity.lastName"
+                name="lastName"
+                placeholder="Last Name">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <button class="mb-3"
+              mat-raised-button
+              type="button" 
+              data-toggle="collapse" 
+              data-target="#passwordCollapse" 
+              aria-expanded="false" 
+              aria-controls="passwordCollapse"
+              *ngIf="editStatus != status.newContent"
+              (click)="onChangePassword()">
+                Change Password
+            </button>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-12">
+            <mat-card 
+              *ngIf="changePasswordState || editStatus === status.newContent"
+              class="show"
+              id="passwordCollapse">
+              <ng2-password-strength-bar
+                [passwordToCheck]="password.newPassword"
+                [barLabel]="'Password strength'">
+              </ng2-password-strength-bar>
+
+              <mat-form-field class="w-100"
+                *ngIf="editStatus === status.ownContent">
+                <input
+                  matInput
+                  id="input-current-password"
+                  type="password"
+                  required
+                  [(ngModel)]="password.currentPassword"
+                  name="currentPass"
+                  placeholder="Current Password"
+                  #currentPass="ngModel">
+                <mat-error
+                  *ngIf="currentPass.touched && currentPass.errors?.required">
+                  This field is required!
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  id="input-new-password"
+                  type="password"
+                  required
+                  [(ngModel)]="password.newPassword"
+                  name="newPass"
+                  placeholder="{{ editStatus !== status.newContent ? 'New ' : ''}}Password"
+                  #newPass="ngModel">
+                <mat-error
+                  *ngIf="newPass.touched && newPass.errors?.required">
+                  This field is required!
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="w-100">
+                <input
+                  matInput
+                  id="input-new-password2"
+                  type="password"
+                  required
+                  [(ngModel)]="password.confirmPassword"
+                  validateEqual="newPass"
+                  name="confirmPass"
+                  placeholder="Confirm Password"
+                  [equalTo]="newPass"
+                  #confirmPass="ngModel">
+                <mat-error
+                  *ngIf="confirmPass.touched && confirmPass.errors?.required">
+                  This field is required!
+                </mat-error>
+                <mat-error
+                  *ngIf="confirmPass.errors?.equalTo">
+                  The confirmation password not match!
+                </mat-error>
+              </mat-form-field>
+            </mat-card>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <button class="mr-3"
+              mat-raised-button color="primary"
+              type="submit"
+              [disabled]="!f.valid">
+              Save
+            </button>
+            <button
+              mat-raised-button
+              type="button"
+              routerLink="/salesmans">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

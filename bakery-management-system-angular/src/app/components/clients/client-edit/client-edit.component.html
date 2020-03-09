@@ -1,0 +1,131 @@
+<div class="container-fluid"
+    *ngIf="salesmanEntity && clientEntity">
+
+  <div class="row">
+    <div class="col-xl-12">
+        <h2>{{title}}</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <form
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm">
+        <input
+          type="hidden"
+          [(ngModel)]="clientEntity.id"
+          name="id"
+          *ngIf="editStatus !== status.newContent"
+          disabled
+        >
+        <div class="row" *ngIf="isAdmin">
+          <div class="col-12">
+            <mat-form-field class="w-100">
+              <mat-select required
+                [(ngModel)]="clientEntity.userId"
+                name="userId"
+                [disabled]="!isAdmin"
+                placeholder="Salesman"
+                [(value)]="salesmanEntity.id">
+                <mat-option *ngFor="let salesman of salesmans"
+                  [value]="salesman.id">
+                  {{ salesman.nameToShow }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                type="text"
+                id="input-fname"
+                [(ngModel)]="clientEntity.firstName"
+                name="firstName"
+                placeholder="First Name">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                type="text"
+                id="input-lname"
+                [(ngModel)]="clientEntity.lastName"
+                name="lastName"
+                placeholder="Last Name">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                type="text"
+                id="input-phone"
+                [(ngModel)]="clientEntity.phone"
+                name="phone"
+                placeholder="Phone">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                type="text"
+                id="input-company"
+                [(ngModel)]="clientEntity.company"
+                name="company"
+                placeholder="Company">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                type="text"
+                id="input-address"
+                [(ngModel)]="clientEntity.address"
+                name="address"
+                placeholder="Address">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <button class="mr-3"
+              type="submit"
+              mat-raised-button color="primary"
+              [disabled]="!f.valid">
+              Save
+            </button>
+            <button
+              mat-raised-button
+              type="button"
+              *ngIf="!isAdmin"
+              [routerLink]="['/clients']">
+              Cancel
+            </button>
+            <button
+              mat-raised-button
+              type="button"
+              *ngIf="isAdmin"
+              [routerLink]="['/salesmans', salesmanEntity.id, 'clients']">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

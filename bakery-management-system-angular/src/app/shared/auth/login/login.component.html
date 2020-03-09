@@ -1,0 +1,38 @@
+<div class="login-page">
+  <div class="row d-flex align-items-center justify-content-md-center">
+    <div class="col-md-4">
+      <img src="assets/images/248928.png" width="150px"/>
+      <h1>Bakery Management System</h1>
+      <form role="form"
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm">
+        <div class="form-content">
+          <mat-form-field class="w-100 mat-input-white">
+            <input matInput
+              type="text" 
+              ngModel
+              name="email" 
+              placeholder="Email"
+              required
+              email
+              #email="ngModel">
+            <mat-error *ngIf="!email.valid && email.touched">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-100 mat-input-white">
+            <input matInput
+              type="password"
+              ngModel
+              name="password"
+              required
+              placeholder="Password">
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary"
+          type="submit">Log in</button>
+      </form>
+    </div>
+  </div>
+</div>

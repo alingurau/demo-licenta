@@ -1,0 +1,67 @@
+<nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
+  <div class="list-group">
+    <a
+      mat-button
+      routerLink="/dashboard"
+      [routerLinkActive]="['router-link-active']"
+      class="list-group-item text-left"
+      (click)="toggleSidebar()">
+      <i class="fa fa-fw fa-dashboard"></i>&nbsp; Dashboard
+    </a>
+    <a *ngIf="isAdmin"
+      mat-button
+      [routerLink]="['/superUsers']"
+      [routerLinkActive]="['router-link-active']"
+      class="list-group-item text-left"
+      (click)="toggleSidebar()">
+      <i class="fa fa-fw fa-black-tie"></i>&nbsp; Manage SuperUser
+    </a>
+    <a
+      mat-button
+      *ngIf="!isAdmin"
+      [routerLink]="['/clients']"
+      [routerLinkActive]="['router-link-active']"
+      class="list-group-item text-left"
+      (click)="toggleSidebar()">
+      <i class="fa fa-fw fa-users"></i>&nbsp; Manage Clients
+    </a>
+    <a
+      mat-button
+      *ngIf="!isAdmin"
+      [routerLink]="['/orders']"
+      [routerLinkActive]="['router-link-active']"
+      class="list-group-item text-left"
+      (click)="toggleSidebar()">
+      <i class="fa fa-fw fa-id-card-o"></i>&nbsp; Orders
+    </a>
+    <a
+    mat-button
+    *ngIf="!isAdmin"
+    [routerLink]="['/recipes']"
+    [routerLinkActive]="['router-link-active']"
+    class="list-group-item text-left"
+    (click)="toggleSidebar()">
+    <i class="fa fa-fw fa-id-card-o"></i>&nbsp; Recipes
+  </a>
+    <div class="header-fields">
+      <div class="nested-menu">
+        <a mat-button
+          class="list-group-item text-left w-100"
+          [matMenuTriggerFor]="menu">
+          <i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp; {{ user.firstName }} {{ user.lastName }}
+        </a>
+        <mat-menu #menu="matMenu">
+          <a mat-menu-item
+            routerLink="/my-account/edit"
+            (click)="toggleSidebar()">
+            <i class="fa fa-fw fa-user"></i> My profile
+          </a>
+          <a mat-menu-item
+            (click)="onLogout()">
+            <i class="fa fa-fw fa-power-off"></i> Log out
+          </a>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+</nav>

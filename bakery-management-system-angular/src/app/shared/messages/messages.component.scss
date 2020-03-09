@@ -1,0 +1,16 @@
+.to-top {
+    position: absolute;
+    z-index: 999999;
+    right: 15px;
+    top: 15px;
+    width: 50%;
+}
+@media screen and (max-width: 991px) {
+    .to-top {
+        top: auto;
+        right: auto;
+        bottom: 15px;
+        width: 100%;
+        padding: 0 15px;
+    }
+}

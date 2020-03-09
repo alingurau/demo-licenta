@@ -1,0 +1,9 @@
+<div class="to-top">
+  <div *ngFor="let msg of messageService.messages; let i = index">
+    <ngb-alert
+      type="{{ msg.type }}"
+      (close)="onAlertClose(i)">
+      {{ msg.msg }}
+    </ngb-alert>
+  </div>
+</div>

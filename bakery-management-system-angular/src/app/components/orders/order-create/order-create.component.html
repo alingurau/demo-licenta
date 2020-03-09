@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+        <h2>Create New Order</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <form
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm">
+
+        <mat-form-field class="w-100">
+          <textarea
+            matInput
+            matTextareaAutosize
+            matAutosizeMinRows="2"
+            type="text"
+            id="input-name"
+            [(ngModel)]="order.name"
+            name="name"
+            placeholder="Name"
+            required
+          ></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <textarea
+            matInput
+            matTextareaAutosize
+            matAutosizeMinRows="2"
+            type="text"
+            id="input-description"
+            [(ngModel)]="order.description"
+            name="description"
+            placeholder="Description"
+            required
+          ></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input matInput
+                  placeholder="Entry Date"
+                  required
+                  (dateChange)="onDateChange($event)"
+                  [value]="date.begin"
+                  disabled>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input matInput
+                  placeholder="Due Date"
+                  required
+                  [satDatepicker]="picker"
+                  (dateChange)="onDateChange($event)"
+                  [value]="date.end"
+                  disabled>
+                <sat-datepicker #picker [rangeMode]="false" disabled="false">
+                </sat-datepicker>
+                <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+        </mat-form-field>
+
+        <div class="form-row">
+          <div class="p-2">
+            <button
+              mat-raised-button color="primary"
+              type="submit"
+              [disabled]="!f.valid">Save Order</button>
+          </div>
+          <div class="p-2">
+            <button
+              mat-raised-button
+              type="button"
+              [routerLink]="['..']">
+              Cancel</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

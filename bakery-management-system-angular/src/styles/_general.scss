@@ -1,0 +1,71 @@
+
+@media print {
+  .breadcrumb {
+    display: none !important;
+  }
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.required-mark {
+  color: darkred;
+}
+
+.error-container {
+  color: darkred;
+}
+
+.color-danger {
+  color: #f44336;
+}
+
+.mat-table {
+  .mat-column-id,
+  .mat-column-position {
+    flex: 0 0 75px;
+  }
+}
+.j-c-e {
+  justify-content: end!important;
+}
+.j-c-c {
+  justify-content: center!important;
+}
+.cdk-overlay-container {
+  z-index: 1031!important;
+}
+.mat-input-white,
+.mat-input-white:not(.mat-focused):not(.mat-form-field-invalid) .mat-form-field-label {
+  color: white!important;
+}
+.mat-input-white {
+  .mat-form-field-underline {
+    background: white;
+  }
+}
+mat-cell,
+mat-footer-cell,
+mat-header-cell {
+  padding: 0 5px;
+  word-break: break-all;
+  overflow: visible!important;
+}
+.mat-badge.mat-badge-full {
+  .mat-badge-content {
+    width: auto!important;
+    padding: 6px!important;
+    line-height: 12px!important;
+  }
+}
+
+/*
+ * Responsive Mat Table - START
+ */
+.responsive-table {
+  overflow-x: auto!important;
+}
+.mat-table {
+  min-width: 800px!important;
+}

@@ -1,0 +1,76 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+        <h2>Add Ingredient to recipe</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <form
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm">
+        <mat-form-field class="w-100">
+          <input required
+            matInput
+            type="text"
+            id="input-name"
+            name="name"
+            [(ngModel)]="ingredient.name"
+            placeholder="Name"
+            #name="ngModel">
+          <mat-error
+            *ngIf="name.touched && !name.valid">
+            Name field is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input required
+            matInput
+            type="number"
+            id="input-amount"
+            name="amount"
+            [(ngModel)]="ingredient.amount"
+            placeholder="Amount"
+            #amount="ngModel">
+          <mat-error
+            *ngIf="amount.touched && !amount.valid">
+            Amount field is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input required
+            matInput
+            type="text"
+            id="input-unitMeasure"
+            name="unitMeasure"
+            [(ngModel)]="ingredient.unitMeasure"
+            placeholder="Unit Measure"
+            #unitMeasure="ngModel">
+          <mat-error
+            *ngIf="unitMeasure.touched && !unitMeasure.valid">
+            Unit Measure field is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-row">
+          <div class="p-2">
+            <button
+              mat-raised-button color="primary"
+              type="submit"
+              [disabled]="!f.valid">Save Ingredient</button>
+          </div>
+          <div class="p-2">
+            <button
+              mat-raised-button
+              type="button"
+              [routerLink]="['..']">
+              Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

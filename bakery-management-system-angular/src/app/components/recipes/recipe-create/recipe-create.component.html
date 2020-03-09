@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-12">
+        <h2>Create New Recipe</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <form
+        (ngSubmit)="onSubmit(f)"
+        #f="ngForm">
+
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            matTextareaAutosize
+            matAutosizeMinRows="2"
+            type="text"
+            id="input-name"
+            [(ngModel)]="recipe.name"
+            name="name"
+            placeholder="Name"
+            required
+          >
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            matTextareaAutosize
+            matAutosizeMinRows="2"
+            type="text"
+            id="input-name"
+            [(ngModel)]="recipe.description"
+            name="description"
+            placeholder="Description"
+            required
+          >
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input
+            matInput
+            matTextareaAutosize
+            matAutosizeMinRows="2"
+            type="text"
+            id="input-imagePath"
+            [(ngModel)]="recipe.imagePath"
+            name="imagePath"
+            placeholder="Image Path"
+            required
+          >
+        </mat-form-field>
+
+        <div class="form-row">
+          <div class="p-2">
+            <button
+              mat-raised-button color="primary"
+              type="submit"
+              [disabled]="!f.valid">Continue</button>
+          </div>
+          <div class="p-2">
+            <button
+              mat-raised-button
+              type="button"
+              [routerLink]="['..']">
+              Cancel</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

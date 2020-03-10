@@ -1,11 +1,11 @@
 <div class="container-fluid"
-  *ngIf="salesmanEntity">
+  *ngIf="superUserEntity">
   <div class="row">
     <div class="col-xl-12">
       <div [ngSwitch]="editStatus">
         <h2 *ngSwitchCase="1">My account</h2>
-        <h2 *ngSwitchCase="2">Edit {{ salesmanName }}</h2>
-        <h2 *ngSwitchCase="3">Create Salesman</h2>
+        <h2 *ngSwitchCase="2">Edit {{ superUserName }}</h2>
+        <h2 *ngSwitchCase="3">Create SuperUser</h2>
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
                 matInput
                 type="text"
                 id="input-email"
-                [(ngModel)]="salesmanEntity.username"
+                [(ngModel)]="superUserEntity.username"
                 name="email"
                 placeholder="Email"
                 email
@@ -44,7 +44,7 @@
                 matInput
                 id="input-fname"
                 type="text"
-                [(ngModel)]="salesmanEntity.firstName"
+                [(ngModel)]="superUserEntity.firstName"
                 name="firstName"
                 placeholder="First Name">
             </mat-form-field>
@@ -55,7 +55,7 @@
                 matInput
                 id="input-lname"
                 type="text"
-                [(ngModel)]="salesmanEntity.lastName"
+                [(ngModel)]="superUserEntity.lastName"
                 name="lastName"
                 placeholder="Last Name">
             </mat-form-field>
@@ -158,7 +158,7 @@
             <button
               mat-raised-button
               type="button"
-              routerLink="/salesmans">
+              routerLink="/superUsers">
               Cancel
             </button>
           </div>

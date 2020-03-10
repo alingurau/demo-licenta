@@ -5,10 +5,9 @@ import { LoggedInGuard } from '../../services/guards/logged-in.service';
 import { IsAnonymousGuard } from '../../services/guards/is-anonymous.service';
 import { IsAdminGuard } from '../../services/guards/is-admin.service';
 import { IsSuperUserGuard } from '../../services/guards/is-superUser.service';
-import { SuperUserEditComponent } from './superUser-edit/superUser-edit.component';
 import { ClientComponent } from '../clients/client/client.component';
 import { ClientEditComponent } from '../clients/client-edit/client-edit.component';
-import { SuperUserComponent } from './superUser/superUser.component';
+import { SuperUserComponent } from './super-user/super-user.component';
 import { ModalConfirmationModule } from '../../shared/modal/confirmation/confirmation.module';
 import { FormsModule } from '@angular/forms';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
@@ -28,6 +27,7 @@ import {
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppLayoutComponent } from '../../shared/layout/app/app.component';
+import { SuperUserEditComponent } from './super-user-edit/super-user-edit.component';
 
 const routes: Routes = [
   {

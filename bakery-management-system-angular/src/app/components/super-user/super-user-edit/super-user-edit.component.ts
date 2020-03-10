@@ -8,9 +8,9 @@ import { SuperUserService } from '../../../services/superUser.service';
 import { MessageService } from '../../../services/message.service';
 
 @Component({
-  selector: 'app-salesman-edit',
-  templateUrl: './salesman-edit.component.html',
-  styleUrls: ['./salesman-edit.component.scss']
+  selector: 'app-super-user-edit',
+  templateUrl: './super-user-edit.component.html',
+  styleUrls: ['./super-user-edit.component.scss']
 })
 export class SuperUserEditComponent extends SelfUnsubscribe implements OnInit, OnDestroy {
 

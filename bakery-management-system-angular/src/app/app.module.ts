@@ -26,6 +26,7 @@ import { LoginLayoutModule } from './shared/layout/login/login.module';
 import { OrdersModule } from './components/orders/orders.module';
 import { RecipesModule } from './components/recipes/recipes.module';
 import { IngredientsModule } from './components/ingredients/ingredients.module';
+import { SuperUserModule } from './components/super-user/super-user.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { IngredientsModule } from './components/ingredients/ingredients.module';
     AppLayoutModule,
     LoginLayoutModule,
     ModalConfirmationModule,
+    SuperUserModule,
     MessagesModule,
     DashboardModule,
     ClientsModule,

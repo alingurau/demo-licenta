@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SuperUserComponent } from './superUser.component';
+import { SuperUserEditComponent } from './super-user-edit.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SuperUserModule } from '../superUser.module';
-import { ClientsModule } from '../../clients/clients.module';
+import { FormsModule } from '@angular/forms';
+import { SuperUserModule } from '../super-user.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ClientsModule } from '../../clients/clients.module';
 import {
   MatButtonModule,
   MatInputModule,
@@ -21,17 +22,19 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppLayoutModule } from '../../../shared/layout/app/app.module';
 
-describe('SuperUserComponent', () => {
-  let component: SuperUserComponent;
-  let fixture: ComponentFixture<SuperUserComponent>;
+describe('SalesmanEditComponent', () => {
+  let component: SuperUserEditComponent;
+  let fixture: ComponentFixture<SuperUserEditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
+        FormsModule,
         SuperUserModule,
-        ClientsModule,
+        RouterTestingModule,
         HttpClientTestingModule,
+        ClientsModule,
         MatButtonModule,
         MatInputModule,
         MatTableModule,
@@ -51,7 +54,7 @@ describe('SuperUserComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SuperUserComponent);
+    fixture = TestBed.createComponent(SuperUserEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,9 +8,9 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { UserService } from '../../../services/user.service';
 
 @Component({
-  selector: 'app-salesman',
-  templateUrl: './salesman.component.html',
-  styleUrls: ['./salesman.component.scss']
+  selector: 'app-super-user',
+  templateUrl: './super-user.component.html',
+  styleUrls: ['./super-user.component.scss']
 })
 export class SuperUserComponent extends SelfUnsubscribe implements OnInit, OnDestroy {
 

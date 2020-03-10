@@ -1,4 +1,4 @@
-import { SuperUserModule } from './superUser.module';
+import { SuperUserModule } from './super-user.module';
 
 describe('SuperUserModule', () => {
   let superUserModule: SuperUserModule;

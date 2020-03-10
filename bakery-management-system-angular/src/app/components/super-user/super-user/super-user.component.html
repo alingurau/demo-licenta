@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xl-12">
-      <h2>Salesman</h2>
+      <h2>SuperUser</h2>
     </div>
   </div>
 
@@ -9,8 +9,8 @@
     <div class="col-xl-12">
       <a
         mat-raised-button color="primary"
-        routerLink="/salesmans/create">
-        Add salesman</a>
+        routerLink="/superUsers/create">
+        Add SuperUser</a>
     </div>
   </div>
 
@@ -37,7 +37,7 @@
           <ng-container matColumnDef="username">
             <mat-header-cell *matHeaderCellDef mat-sort-header> User </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <a [routerLink]="['/salesmans', row.id, 'clients']" *ngIf="isAdmin">
+              <a [routerLink]="['/superUsers', row.id, 'clients']" *ngIf="isAdmin">
                 {{ row.username }}
               </a>
               <a [routerLink]="['/clients']" *ngIf="!isAdmin">
@@ -57,14 +57,14 @@
             <mat-header-cell *matHeaderCellDef class="j-c-c"> Actions </mat-header-cell>
             <mat-cell *matCellDef="let row" class="j-c-e">
               <div class="button-row">
-                <a [routerLink]="['/salesmans', row.id, 'edit']"
+                <a [routerLink]="['/superUsers', row.id, 'edit']"
                   mat-raised-button color="primary"
                   class="mr-1 mb-1 mt-1">
                   <i class="fa fa-pencil"></i>
                 </a>
                 <app-modal-confirmation
-                  [modalConfirmationText]="'Do you really want to delete this salesman? This process cannot be undone!'"
-                  (modalAction)="deleteSalesman(row.id)"></app-modal-confirmation>
+                  [modalConfirmationText]="'Do you really want to delete this superUser? This process cannot be undone!'"
+                  (modalAction)="deleteSuperUser(row.id)"></app-modal-confirmation>
               </div>
             </mat-cell>
           </ng-container>

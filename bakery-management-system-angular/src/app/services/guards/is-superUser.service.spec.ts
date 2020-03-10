@@ -4,7 +4,7 @@ import { IsSuperUserGuard } from './is-superUser.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('IsSalesmanGuard', () => {
+describe('IsSuperUserGuard', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [

@@ -8,7 +8,6 @@ import {
   MatGridListModule,
   MatTooltipModule
 } from '@angular/material';
-import { KeysPipeModule } from '../../pipes/keys/keys.module';
 
 @NgModule({
   imports: [
@@ -18,7 +17,6 @@ import { KeysPipeModule } from '../../pipes/keys/keys.module';
     MatIconModule,
     MatGridListModule,
     MatTooltipModule,
-    KeysPipeModule
   ],
   declarations: [
     ThemePickerComponent

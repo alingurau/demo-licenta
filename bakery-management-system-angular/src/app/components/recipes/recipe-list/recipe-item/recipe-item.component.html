@@ -1,8 +1,7 @@
 <div class="row">
   <div class="col-xs-12">
     <img
-      [src]="recipe.imagePath"
-      alt="{{ recipe.name }}"
+      [attr.src]="recipe.imagePath | async"
       class="img-responsive"
       style="max-height: 300px;">
   </div>
@@ -30,7 +29,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<!-- <div class="row">
   <div class="col-xs-12">
     {{ recipe.description }}
   </div>
@@ -45,4 +44,4 @@
       </li>
     </ul>
   </div>
-</div>
+</div> -->

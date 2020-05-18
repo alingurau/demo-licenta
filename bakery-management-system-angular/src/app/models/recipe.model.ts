@@ -5,7 +5,7 @@ export class Recipe {
     name = '';
     description = '';
     imagePath = '';
-    // ingredients: Ingredient[];
+    ingredients: Ingredient[];
     position = 0;
 
     constructor(data: any) {

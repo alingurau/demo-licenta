@@ -1,5 +1,5 @@
 <div class="container-fluid"
-    *ngIf="salesmanEntity && clientEntity">
+    *ngIf="superUserEntity && clientEntity">
 
   <div class="row">
     <div class="col-xl-12">
@@ -26,11 +26,11 @@
                 [(ngModel)]="clientEntity.userId"
                 name="userId"
                 [disabled]="!isAdmin"
-                placeholder="Salesman"
-                [(value)]="salesmanEntity.id">
-                <mat-option *ngFor="let salesman of salesmans"
-                  [value]="salesman.id">
-                  {{ salesman.nameToShow }}
+                placeholder="superUser"
+                [(value)]="superUserEntity.id">
+                <mat-option *ngFor="let superUser of superUsers"
+                  [value]="superUser.id">
+                  {{ superUser.nameToShow }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -120,7 +120,7 @@
               mat-raised-button
               type="button"
               *ngIf="isAdmin"
-              [routerLink]="['/salesmans', salesmanEntity.id, 'clients']">
+              [routerLink]="['/superUsers', superUserEntity.id, 'clients']">
               Cancel
             </button>
           </div>

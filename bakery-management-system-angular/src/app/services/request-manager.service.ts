@@ -272,4 +272,7 @@ export class RequestManager {
     return this.http.patch(`${environment.API_URL}/ingredient/${id}`, data);
   }
 
+  getIngredientsByRecipeId(recipeId: number): Observable<any> {
+    return this.http.get(`${environment.API_URL}/ingredient/listByRecipeId/${recipeId}`);
+  }
 }

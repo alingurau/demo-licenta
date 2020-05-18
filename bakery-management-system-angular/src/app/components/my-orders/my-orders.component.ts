@@ -11,6 +11,7 @@ import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
 import { ClientService } from 'src/app/services/client.service';
 import { Client } from 'src/app/models/client.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-my-orders',
@@ -20,14 +21,14 @@ import { Client } from 'src/app/models/client.model';
 export class MyOrdersComponent extends SelfUnsubscribe implements OnInit, OnDestroy {
 
   entity: User;
-  displayedColumns = ['position', 'name', 'description', 'start', 'end', 'client', 'actions'];
+  displayedColumns = ['position', 'name', 'description', 'start', 'end', 'recipe', 'client', 'actions'];
   dataSource: MatTableDataSource<Order>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  clientEntity: any;
 
   constructor(
     private orderService: OrderService,
+    private userService: UserService,
     private clientService: ClientService,
     private route: ActivatedRoute
   ) {
@@ -46,16 +47,20 @@ export class MyOrdersComponent extends SelfUnsubscribe implements OnInit, OnDest
   }
 
   getOrders() {
-        const subscr = this.orderService.getOrders().subscribe((orders: Order[]) => {
-          orders.map((item, index) => {
+    const userService = this.userService.getUser().subscribe((user: User) => {
+      this.entity = user;
+        const orderSubscr = this.orderService.getAllOrdersByUserId(this.entity.id).subscribe((data: any[]) => {
+          data.map((item, index) => {
             item.position = ++index;
           });
 
-          this.dataSource = new MatTableDataSource(orders);
+          this.dataSource = new MatTableDataSource(data);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         });
-        this.addSubscription(subscr);
+        this.addSubscription(orderSubscr);
+      });
+      this.addSubscription(userService);
 }
 
   deleteOrder(id: number) {

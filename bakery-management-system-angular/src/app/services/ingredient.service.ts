@@ -4,6 +4,7 @@ import { Ingredient } from '../models/ingredient.model';
 import { MessageService } from './message.service';
 import { RequestManager } from './request-manager.service';
 import { Observable, Observer } from 'rxjs';
+import { Recipe } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +98,29 @@ export class IngredientService extends SelfUnsubscribe {
           },
           (err) => {
             observer.next(false);
+            this.messageService.showMessage(err.error.message, 'danger');
+          }
+        );
+
+      this.addSubscription(subscr);
+    });
+  }
+
+  getIngredientsByRecipeId(recipeId: number): Observable<Recipe[]> {
+    return new Observable<Recipe[]>((observer: Observer<Recipe[]>) => {
+      const subscr = this.requestManager.getIngredientsByRecipeId(recipeId)
+        .subscribe(
+          (response) => {
+            const recipes: Recipe[] = [];
+            for (const orderData of response) {
+              orderData.start = new Date(orderData.start).getTime();
+              orderData.end = new Date(orderData.end).getTime();
+              recipes.push(new Recipe(orderData));
+            }
+            observer.next(recipes);
+          },
+          (err) => {
+            observer.next([]);
             this.messageService.showMessage(err.error.message, 'danger');
           }
         );

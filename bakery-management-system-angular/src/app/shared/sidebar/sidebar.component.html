@@ -28,11 +28,11 @@
     <a
       mat-button
       *ngIf="!isAdmin"
-      [routerLink]="['/orders']"
+      [routerLink]="['/my-orders']"
       [routerLinkActive]="['router-link-active']"
       class="list-group-item text-left"
       (click)="toggleSidebar()">
-      <i class="fa fa-fw fa-id-card-o"></i>&nbsp; Orders
+      <i class="fa fa-fw fa-cart-plus"></i>&nbsp; Orders
     </a>
     <a
     mat-button
@@ -41,7 +41,7 @@
     [routerLinkActive]="['router-link-active']"
     class="list-group-item text-left"
     (click)="toggleSidebar()">
-    <i class="fa fa-fw fa-id-card-o"></i>&nbsp; Recipes
+    <i class="fa fa-fw fa-list"></i>&nbsp; Recipes
   </a>
     <div class="header-fields">
       <div class="nested-menu">

@@ -9,6 +9,8 @@ import { NgForm } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
 import { MatDatepickerInputEvent } from '@angular/material';
 import { Client } from 'src/app/models/client.model';
+import { Recipe } from 'src/app/models/recipe.model';
+import { RecipeService } from 'src/app/services/recipe.service';
 
 @Component({
   selector: 'app-order-create',
@@ -17,9 +19,11 @@ import { Client } from 'src/app/models/client.model';
 })
 export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnDestroy {
 
-  clientEntity: Client;
+  clientID: number;
+  recipes: Recipe[] = [];
   order = new Order({
     clientId: 0,
+    recipe: {},
     name: '',
     description: '',
     start: '',
@@ -34,6 +38,7 @@ export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnD
 
   constructor(
     private clientService: ClientService,
+    private recipeService: RecipeService,
     private orderService: OrderService,
     private route: ActivatedRoute,
     private router: Router,
@@ -47,12 +52,34 @@ export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnD
 
   ngOnInit() {
     const subscr = this.route.params.subscribe((params: Params) => {
-      this.clientEntity.id = +params.id;
+      this.clientID = +params.id;
     });
     this.addSubscription(subscr);
 
-    this.order.clientId = this.clientEntity.id;
+    // Get recipes
+    this.getRecipes();
 
+    // Prepare order
+    this.order.clientId = this.clientID;
+  }
+
+  onRecipeChange(id) {
+    const slsubscr = this.recipeService.getRecipe(id)
+      .subscribe((recipe: Recipe) => {
+
+        this.order.recipe.id = recipe.id;
+      });
+
+    this.addSubscription(slsubscr);
+  }
+
+  getRecipes(): void {
+    const slsubscr = this.recipeService.getRecipes()
+      .subscribe((recipeList: Recipe[]) => {
+        this.recipes = recipeList;
+      });
+
+    this.addSubscription(slsubscr);
   }
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
@@ -62,7 +89,7 @@ export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnD
   onSubmit(form: NgForm) {
     if (form.valid) {
 
-      const orderSubscr = this.orderService.createOrder(form.value)
+      const orderSubscr = this.orderService.createOrder(this.order)
         .subscribe((response) => {
           orderSubscr.unsubscribe();
           if (response) {

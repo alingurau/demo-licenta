@@ -36,7 +36,7 @@ export class ClientEditComponent extends SelfUnsubscribe implements OnInit, OnDe
     private userService: UserService,
     private clientService: ClientService,
     private route: ActivatedRoute,
-    private salesmanService: SuperUserService,
+    private superUserService: SuperUserService,
     private router: Router
   ) {
     super();
@@ -67,9 +67,9 @@ export class ClientEditComponent extends SelfUnsubscribe implements OnInit, OnDe
     this.isAdmin = this.userService.isAdmin();
   }
 
-  private initSalesmanAC() {
+  private initSuperUserAC() {
     if (this.isAdmin) {
-      const acSubscr = this.salesmanService.getSuperUserFiltered('').subscribe((result) => {
+      const acSubscr = this.superUserService.getSuperUserFiltered('').subscribe((result) => {
         result.map((item) => {
           item.nameToShow = this.formatACName(item);
         });
@@ -93,7 +93,7 @@ export class ClientEditComponent extends SelfUnsubscribe implements OnInit, OnDe
       const clientSubscr = this.clientService.getClient(clientID).subscribe((client: Client) => {
         this.clientEntity = client;
         this.title = 'Edit ' + client.firstName + ' ' + client.lastName;
-        this.initSalesmanAC();
+        this.initSuperUserAC();
       });
       this.addSubscription(clientSubscr);
     } else {
@@ -102,7 +102,7 @@ export class ClientEditComponent extends SelfUnsubscribe implements OnInit, OnDe
       delete this.clientEntity.id;
       this.clientEntity.userId = this.superUserEntity.id;
       this.title = 'Create New Client';
-      this.initSalesmanAC();
+      this.initSuperUserAC();
     }
   }
 

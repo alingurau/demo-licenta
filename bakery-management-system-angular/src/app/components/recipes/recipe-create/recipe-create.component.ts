@@ -16,9 +16,10 @@ import { NgForm } from '@angular/forms';
 export class RecipeCreateComponent extends SelfUnsubscribe implements OnInit, OnDestroy {
 
   clientID: number;
-  ingredients: Ingredient[] = [];
+  // ingredients: Ingredient[] = [];
   recipe = new Recipe({
-    // ingredient: {},
+    id: 0,
+    ingredients: [],
     name: '',
     description: '',
     imagePath: '',
@@ -35,13 +36,15 @@ export class RecipeCreateComponent extends SelfUnsubscribe implements OnInit, On
   }
 
   ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    console.log(id);
     this.getIngredients();
   }
 
   getIngredients(): void {
     const slsubscr = this.ingredientService.getIngredients()
       .subscribe((ingredientsList: Ingredient[]) => {
-        this.ingredients = ingredientsList;
+        this.recipe.ingredients = ingredientsList;
       });
 
     this.addSubscription(slsubscr);

@@ -56,7 +56,18 @@
             </mat-cell>
           </ng-container>
 
-          <!-- Expires in Column -->
+          <!-- Recipe Column -->
+          <ng-container matColumnDef="recipe">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Recipe</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              {{ row.recipe }}
+              <!-- <a [routerLink]="['/clients', +row.clientId.id, 'orders']">
+                {{ row.clientId.name }}
+              </a> -->
+            </mat-cell>
+          </ng-container>
+
+          <!-- Client Column -->
           <ng-container matColumnDef="client">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Client</mat-header-cell>
             <mat-cell *matCellDef="let row">

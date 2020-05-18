@@ -1,7 +1,8 @@
-<div class="container-fluid">
+<div class="container-fluid"
+*ngIf="clientEntity">
   <div class="row">
     <div class="col-xl-12">
-      <h2>Orders</h2>
+      <h2>{{ clientEntity.firstName }} {{ clientEntity.lastName }}'s orders</h2>
     </div>
   </div>
 
@@ -9,7 +10,7 @@
     <div class="col-xl-12">
       <a
         mat-raised-button color="primary"
-        [routerLink]="[ '/orders', 'create']">
+        [routerLink]="['/clients', clientEntity.id, 'orders', 'create']">
         Create Order</a>
     </div>
   </div>
@@ -62,6 +63,14 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </mat-header-cell>
           <mat-cell *matCellDef="let row">
             {{ row.end | date }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Recipe Column -->
+        <ng-container matColumnDef="recipe">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Recipe </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.recipe.name }}
           </mat-cell>
         </ng-container>
 

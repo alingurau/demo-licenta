@@ -18,7 +18,7 @@ export class OrderComponent extends SelfUnsubscribe implements OnInit, OnDestroy
   clientEntity: Client;
   orders: Order[];
   today: number = Date.now();
-  displayedColumns = ['position', 'name', 'description', 'start', 'end', 'actions'];
+  displayedColumns = ['position', 'name', 'description', 'start', 'end', 'recipe', 'actions'];
   dataSource: MatTableDataSource<Order>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -44,7 +44,11 @@ export class OrderComponent extends SelfUnsubscribe implements OnInit, OnDestroy
   }
 
   getOrders() {
-        const subscr = this.orderService.getOrders().subscribe((orders: Order[]) => {
+    const paramSubscr = this.route.params.subscribe((params: Params) => {
+      const clientId = +params.id;
+      const clientSubscr = this.clientService.getClient(clientId).subscribe((client: Client) => {
+        this.clientEntity = client;
+        const subscr = this.orderService.getOrders(this.clientEntity.id).subscribe((orders: Order[]) => {
           orders.map((item, index) => {
             item.position = ++index;
           });
@@ -54,6 +58,10 @@ export class OrderComponent extends SelfUnsubscribe implements OnInit, OnDestroy
           this.dataSource.sort = this.sort;
         });
         this.addSubscription(subscr);
+      });
+      this.addSubscription(clientSubscr);
+    });
+    this.addSubscription(paramSubscr);
   }
 
   deleteLicense(id: number) {

@@ -72,4 +72,12 @@ public class Client extends BaseEntity {
     public void setUserId(User userId) {
         this.userId = userId;
     }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }

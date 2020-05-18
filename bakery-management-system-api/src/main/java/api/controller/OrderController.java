@@ -4,6 +4,8 @@ import api.entity.*;
 import api.exceptions.RestExceptions;
 import api.repository.ClientRepository;
 import api.repository.OrderRepository;
+import api.repository.RecipeRepository;
+import api.repository.UserRepository;
 import api.rest.BaseLogger;
 import api.rest.RestImplementation;
 import api.service.EntityUpdateService;
@@ -27,6 +29,10 @@ public class OrderController extends RestImplementation<OrderRepository, Order> 
     private OrderRepository orderRepository;
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RecipeRepository recipeRepository;
 
     private EntityUpdateService<Order, OrderRepository> reflection;
 
@@ -39,9 +45,7 @@ public class OrderController extends RestImplementation<OrderRepository, Order> 
     public List<Order> readAllOrders() {
         List<Order> orders = new ArrayList<>();
 
-        orderRepository.findAll().forEach((order) ->{
-            orders.add(order);
-        });
+        orderRepository.findAll().forEach(orders::add);
 
         return orders;
     }
@@ -56,8 +60,23 @@ public class OrderController extends RestImplementation<OrderRepository, Order> 
 
     @RequestMapping(method = POST)
     @Override
-    public Order create(@RequestBody Order data){
+    public Order create(@RequestBody Order data) {
         try {
+
+            Optional<Client> client = this.clientRepository.findById(data.getClientId().getId());
+
+            if(!client.isPresent()){
+                throw new RestExceptions.BadRequest("Client does not exist");
+            }
+
+            Optional<Recipe> recipe = this.recipeRepository.findById(data.getRecipe().getId());
+
+            if (!recipe.isPresent()) {
+                throw new RestExceptions.BadRequest("Recipe does not exist");
+            }
+
+            data.setClientId(client.get());
+            data.setRecipe(recipe.get());
 
             return this.orderRepository.save(data);
 
@@ -97,6 +116,19 @@ public class OrderController extends RestImplementation<OrderRepository, Order> 
         }
 
         return this.orderRepository.findAllByClientId(client.get());
+
+    }
+
+    @RequestMapping(method = GET, value = "/listByUserId/{id}")
+    public Collection<Order> listByUserId(@PathVariable(value = "id") long id){
+
+        Optional<User> user = this.userRepository.findById(id);
+
+        if (!user.isPresent()) {
+            throw new RestExceptions.BadRequest("User does not exist");
+        }
+
+        return this.orderRepository.findAllOrdersByUserId(user.get());
 
     }
 

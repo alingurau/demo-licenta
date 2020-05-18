@@ -24,10 +24,10 @@ public class Order extends BaseEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Client clientId;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "recipe_id")
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//    private Recipe recipeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Recipe recipe;
 
     public String getName() {
         return name;
@@ -67,6 +67,14 @@ public class Order extends BaseEntity {
 
     public void setClientId(Client clientId) {
         this.clientId = clientId;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
 //    public User getUserId() {

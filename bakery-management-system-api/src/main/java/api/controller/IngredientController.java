@@ -1,17 +1,21 @@
 package api.controller;
 
 import api.entity.Ingredient;
+import api.entity.Recipe;
 import api.exceptions.RestExceptions;
 import api.repository.IngredientRepository;
+import api.repository.RecipeRepository;
 import api.rest.BaseLogger;
 import api.rest.RestImplementation;
 import api.service.EntityUpdateService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +26,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class IngredientController extends RestImplementation<IngredientRepository, Ingredient> {
 
     private IngredientRepository ingredientRepository;
+
+    @Autowired
+    private RecipeRepository recipeRepository;
 
     private EntityUpdateService<Ingredient, IngredientRepository> reflection;
 
@@ -98,6 +105,19 @@ public class IngredientController extends RestImplementation<IngredientRepositor
             BaseLogger.log(RestImplementation.class).error(msg);
             throw new RestExceptions.EntityNotFoundException(msg);
         }
+
+    }
+
+    @RequestMapping(method = GET, value = "/listByRecipeId/{id}")
+    public Collection<Ingredient> listByRecipeId(@PathVariable(value = "id") long id) throws Exception{
+
+        Optional<Recipe> recipe = this.recipeRepository.findById(id);
+
+        if(!recipe.isPresent()){
+            throw new RestExceptions.BadRequest("Client does not exist");
+        }
+
+        return this.ingredientRepository.findAllByRecipeId(recipe.get());
 
     }
 }

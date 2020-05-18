@@ -4,6 +4,7 @@ import { RecipeService } from 'src/app/services/recipe.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SelfUnsubscribe } from 'src/app/shared/self-unsubscribe';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-recipe-item',
@@ -18,6 +19,9 @@ export class RecipeItemComponent extends SelfUnsubscribe implements OnInit {
   @Input() recipe: Observable<Recipe>;
   @Input() id: number;
 
+  recipeForm: FormGroup;
+
+
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
@@ -27,7 +31,6 @@ export class RecipeItemComponent extends SelfUnsubscribe implements OnInit {
    }
 
   ngOnInit() {
-
     this.route.params
     .subscribe(
       (params: Params) => {

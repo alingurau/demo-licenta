@@ -22,9 +22,8 @@ const routes: Routes = [
     path: '',
     component: AppLayoutComponent,
     children: [
-      { path: 'orders', component: OrderComponent, canActivate: [LoggedInGuard] },
       { path: 'clients/:id/orders', component: OrderComponent, canActivate: [LoggedInGuard] },
-      { path: 'orders/create', component: OrderCreateComponent, canActivate: [LoggedInGuard] },
+      { path: 'clients/:id/orders/create', component: OrderCreateComponent, canActivate: [LoggedInGuard] },
       { path: 'orders/:id/edit', component: OrderEditComponent, canActivate: [LoggedInGuard] }
     ]
   }

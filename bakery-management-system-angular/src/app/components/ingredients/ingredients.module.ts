@@ -35,7 +35,10 @@ const routes: Routes = [
     MatPaginatorModule,
     ModalConfirmationModule,
     RouterModule.forChild(routes)  ],
-  declarations: [IngredientCreateComponent, IngredientsComponent, IngredientEditComponent],
+  declarations: [
+    IngredientCreateComponent,
+    IngredientsComponent,
+    IngredientEditComponent],
   providers: [
     LoggedInGuard,
     IsAnonymousGuard,

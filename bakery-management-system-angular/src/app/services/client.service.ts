@@ -18,9 +18,9 @@ export class ClientService extends SelfUnsubscribe {
     super();
   }
 
-  getClients(salesmanID: number): Observable<Array<Client>> {
+  getClients(superUserID: number): Observable<Array<Client>> {
     return new Observable<Array<Client>>((observer: Observer<Array<Client>>) => {
-      const subscr = this.requestManager.getClientsList(salesmanID)
+      const subscr = this.requestManager.getClientsList(superUserID)
         .subscribe(
           (response) => {
             const clients: Client[] = [];

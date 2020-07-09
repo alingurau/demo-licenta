@@ -78,8 +78,8 @@ export class RequestManager {
 
   // CLIENT
 
-  getClientsList(salesmanID: number): Observable<any> {
-    return this.http.get(`${environment.API_URL}/client/listByUserId/${salesmanID}`).map((data: any[]) => {
+  getClientsList(superUserID: number): Observable<any> {
+    return this.http.get(`${environment.API_URL}/client/listByUserId/${superUserID}`).map((data: any[]) => {
       for (const d of data) {
         if (typeof d.userId === 'object') {
           d.userId = d.userId.id;

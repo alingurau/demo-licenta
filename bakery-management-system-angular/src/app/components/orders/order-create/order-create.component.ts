@@ -5,10 +5,9 @@ import { Params, ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from 'src/app/services/client.service';
 import { MessageService } from 'src/app/services/message.service';
 import { NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
-import { MatDatepickerInputEvent } from '@angular/material';
-import { Client } from 'src/app/models/client.model';
+import { MatDatepickerInputEvent, ThemePalette } from '@angular/material';
 import { Recipe } from 'src/app/models/recipe.model';
 import { RecipeService } from 'src/app/services/recipe.service';
 
@@ -30,11 +29,15 @@ export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnD
     end: '',
   });
 
+  multiplyRecipe;
+  newRecipe;
+
   date = {
     begin: new Date,
     end: new Date
   };
-  today: number = Date.now();
+  today = Date.now().toLocaleString;
+  dateFormat: Date;
 
   constructor(
     private clientService: ClientService,
@@ -68,8 +71,12 @@ export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnD
       .subscribe((recipe: Recipe) => {
 
         this.order.recipe.id = recipe.id;
+        // recipe.ingredients.forEach(element => {
+        //   this.newRecipe = element.amount * this.multiplyRecipe;
+        // });
+        // recipe.ingredients.push(this.newRecipe);
+        // console.log(this.newRecipe);
       });
-
     this.addSubscription(slsubscr);
   }
 
@@ -98,7 +105,13 @@ export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnD
         });
       this.addSubscription(orderSubscr);
     }
+    // this.calculateOrderByNumberOfMultiplyRecipe();
   }
+
+  // calculateOrderByNumberOfMultiplyRecipe() {
+  //   this.recipe
+  //   })
+  // }
 
   updateDate() {
     this.date = {

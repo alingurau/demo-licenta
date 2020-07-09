@@ -14,7 +14,7 @@ public class Order extends BaseEntity {
     private Date start;
     private Date end;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id")
 //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 //    private User userId;

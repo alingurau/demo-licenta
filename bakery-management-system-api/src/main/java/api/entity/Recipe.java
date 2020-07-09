@@ -14,15 +14,10 @@ public class Recipe extends BaseEntity {
     private String description;
     private String imagePath;
 
-//    @OneToMany(
-//            mappedBy = "recipe",
-//            cascade = CascadeType.ALL,
-//            orphanRemoval = true
-//    )
-//    @OneToMany(orphanRemoval=true, mappedBy = "recipeId")
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ingredients")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ingredients")
+//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @Transient
     private List<Ingredient> ingredients = new ArrayList<>();
 
     public String getName() {

@@ -17,7 +17,7 @@ export class OrderComponent extends SelfUnsubscribe implements OnInit, OnDestroy
 
   clientEntity: Client;
   orders: Order[];
-  today: number = Date.now();
+  // today: number = Date.now();
   displayedColumns = ['position', 'name', 'description', 'start', 'end', 'recipe', 'actions'];
   dataSource: MatTableDataSource<Order>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,7 +29,7 @@ export class OrderComponent extends SelfUnsubscribe implements OnInit, OnDestroy
     private route: ActivatedRoute
   ) {
     super();
-    setInterval(() => {this.today = Date.now()}, 1);
+    // setInterval(() => {this.today = Date.now()}, 1);
   }
 
   ngOnInit() {

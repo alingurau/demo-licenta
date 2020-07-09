@@ -6,7 +6,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xl-12">
+    <div class="col-xl-6">
       <form
         (ngSubmit)="onSubmit(f)"
         #f="ngForm">
@@ -26,17 +26,16 @@
         </mat-form-field>
 
         <mat-form-field class="w-100">
-          <input
+          <textarea
             matInput
-            matTextareaAutosize
-            matAutosizeMinRows="2"
             type="text"
             id="input-description"
             [(ngModel)]="recipe.description"
             name="description"
             placeholder="Description"
             required
-          >
+            appearance="fill"
+          ></textarea>
         </mat-form-field>
 
         <mat-form-field class="w-100">
@@ -53,23 +52,25 @@
           >
         </mat-form-field>
 
-        <div class="form-row">
-          <div class="p-2">
-            <button
-              mat-raised-button color="primary"
-              type="submit"
-              [disabled]="!f.valid">Continue</button>
-          </div>
-          <div class="p-2">
-            <button
-              mat-raised-button
-              type="button"
-              [routerLink]="['..']">
-              Cancel</button>
-          </div>
-        </div>
-
       </form>
-    </div>
+    </div> 
+  </div>
+  <div class="row">
+    <app-ingredient-create [ingredients]="recipe.ingredients"></app-ingredient-create>
+  </div>
+  <div class="row">
+      <div class="col-xs-2 p-2">
+        <button
+          mat-raised-button color="primary"
+          type="submit"
+          [disabled]="!f.valid">Submit</button>
+      </div>
+      <div class="col-xs-2 p-2">
+        <button
+          mat-raised-button
+          type="button"
+          [routerLink]="['..']">
+          Cancel</button>
+      </div>
   </div>
 </div>

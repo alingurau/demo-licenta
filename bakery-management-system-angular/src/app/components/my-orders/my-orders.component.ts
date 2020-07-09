@@ -49,6 +49,7 @@ export class MyOrdersComponent extends SelfUnsubscribe implements OnInit, OnDest
   getOrders() {
     const userService = this.userService.getUser().subscribe((user: User) => {
       this.entity = user;
+      console.log(this.entity);
         const orderSubscr = this.orderService.getAllOrdersByUserId(this.entity.id).subscribe((data: any[]) => {
           data.map((item, index) => {
             item.position = ++index;

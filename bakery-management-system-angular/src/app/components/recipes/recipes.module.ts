@@ -8,7 +8,7 @@ import { AppLayoutComponent } from 'src/app/shared/layout/app/app.component';
 import { Routes, RouterModule } from '@angular/router';
 import { LoggedInGuard } from 'src/app/services/guards/logged-in.service';
 import { IsSuperUserGuard } from 'src/app/services/guards/is-superUser.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalConfirmationModule } from 'src/app/shared/modal/confirmation/confirmation.module';
@@ -16,6 +16,8 @@ import { MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule, MatP
 import { IsAnonymousGuard } from 'src/app/services/guards/is-anonymous.service';
 import { IsAdminGuard } from 'src/app/services/guards/is-admin.service';
 import { RecipeCreateComponent } from './recipe-create/recipe-create.component';
+import { IngredientCreateComponent } from '../ingredients/ingredient-create/ingredient-create.component';
+import { IngredientsModule } from '../ingredients/ingredients.module';
 
 const routes: Routes = [
   {
@@ -43,6 +45,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
+    IngredientsModule,
+    ReactiveFormsModule,
     CommonModule,
     FormsModule,
     NgSelectModule,
@@ -59,7 +63,12 @@ const routes: Routes = [
     MatSelectModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [RecipeListComponent, RecipeEditComponent, RecipeDetailComponent, RecipeItemComponent, RecipeCreateComponent],
+  declarations: [
+    RecipeListComponent,
+    RecipeEditComponent,
+    RecipeDetailComponent,
+    RecipeItemComponent,
+    RecipeCreateComponent],
   providers: [
     LoggedInGuard,
     IsAnonymousGuard,

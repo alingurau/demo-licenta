@@ -6,7 +6,7 @@ import { AppLayoutComponent } from 'src/app/shared/layout/app/app.component';
 import { LoggedInGuard } from 'src/app/services/guards/logged-in.service';
 import { IsAdminGuard } from 'src/app/services/guards/is-admin.service';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MatButtonModule, MatInputModule, MatFormFieldModule, MatTableModule, MatPaginatorModule, MatSelectModule } from '@angular/material';
 import { ModalConfirmationModule } from 'src/app/shared/modal/confirmation/confirmation.module';
 import { IngredientsComponent } from './ingredients/ingredients.component';
 import { IngredientEditComponent } from './ingredient-edit/ingredient-edit.component';
@@ -27,6 +27,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    MatSelectModule,
     FormsModule,
     MatButtonModule,
     MatInputModule,
@@ -43,6 +44,9 @@ const routes: Routes = [
     LoggedInGuard,
     IsAnonymousGuard,
     IsAdminGuard,
+  ],
+  exports: [
+    IngredientCreateComponent,
   ]
 })
 export class IngredientsModule { }

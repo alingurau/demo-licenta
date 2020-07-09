@@ -10,7 +10,7 @@
       <form
         (ngSubmit)="onSubmit(f)"
         #f="ngForm">
-        <mat-form-field class="w-100">
+        <mat-form-field class="col-md-4 w-100">
           <input required
             matInput
             type="text"
@@ -25,7 +25,7 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="w-100">
+        <mat-form-field class="col-md-4 w-100">
           <input required
             matInput
             type="number"
@@ -40,35 +40,39 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class="w-100">
-          <input required
-            matInput
-            type="text"
-            id="input-unitMeasure"
+        <mat-form-field class="col-md-4 w-100">
+          <mat-label>Unit Measure</mat-label>
+          <mat-select
             name="unitMeasure"
             [(ngModel)]="ingredient.unitMeasure"
-            placeholder="Unit Measure"
             #unitMeasure="ngModel">
+            <mat-option value="option">g</mat-option>
+            <mat-option value="option">L</mat-option>
+          </mat-select>
+          <!-- <input required
+            matInput
+            type="text"
+            > -->
           <mat-error
             *ngIf="unitMeasure.touched && !unitMeasure.valid">
             Unit Measure field is required
           </mat-error>
         </mat-form-field>
 
-        <div class="form-row">
+        <div class="col-md-4">
           <div class="p-2">
             <button
               mat-raised-button color="primary"
               type="submit"
               [disabled]="!f.valid">Save Ingredient</button>
           </div>
-          <div class="p-2">
+          <!-- <div class="p-2">
             <button
               mat-raised-button
               type="button"
               [routerLink]="['..']">
               Cancel</button>
-          </div>
+          </div> -->
         </div>
       </form>
     </div>

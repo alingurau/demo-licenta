@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output } from '@angular/core';
 import { Ingredient } from 'src/app/models/ingredient.model';
 import { SelfUnsubscribe } from 'src/app/shared/self-unsubscribe';
 import { IngredientService } from 'src/app/services/ingredient.service';
@@ -15,9 +15,11 @@ import { RecipeService } from 'src/app/services/recipe.service';
 })
 export class IngredientCreateComponent extends SelfUnsubscribe implements OnInit, OnDestroy {
 
-  @Input() recipe: Observable<Recipe>;
+  @Output() recipe: Observable<Recipe>;
+  @Input() ingredients: Ingredient;
   // @Input() id: number;
   recipeEntity: Recipe;
+  id: number;
 
   ingredient = new Ingredient({
     id: 0,
@@ -42,7 +44,10 @@ export class IngredientCreateComponent extends SelfUnsubscribe implements OnInit
     // });
     // this.addSubscription(subscr);
 
-    this.recipe = this.recipeService.getRecipe(this.ingredient.recipeId);
+    const subscr = this.route.params.subscribe((params: Params) => {
+      this.id = +params.id;
+    });
+    this.recipe = this.recipeService.getRecipe(this.id);
     console.log(this.recipe)
     // this.route.params
     // .subscribe(
@@ -68,9 +73,12 @@ export class IngredientCreateComponent extends SelfUnsubscribe implements OnInit
     if (form.valid) {
       const ingredientSubscr = this.ingredientService.createIngredient(form.value)
         .subscribe((response) => {
+          console.log(ingredientSubscr);
+          // this.recipeEntity.ingredients.push(ingredientSubscr);
           ingredientSubscr.unsubscribe();
           if (response) {
-            this.router.navigate(['..'], {relativeTo: this.route});
+            // this.recipeEntity.ingredients.push()
+            // this.router.navigate(['..'], {relativeTo: this.route});
           }
         });
       this.addSubscription(ingredientSubscr);

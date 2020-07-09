@@ -131,7 +131,7 @@ public class ClientController extends RestImplementation<ClientRepository, Clien
             throw new RestExceptions.BadRequest("Client does not exist");
         }
 
-        if(client.isPresent()){
+        if (client.isPresent()) {
             try{
                 this.clientRepository.delete(client.get());
                 return client.get();

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="orderEntity">
   <div class="row">
     <div class="col-xl-12">
       <h2>Order</h2>
@@ -10,6 +10,20 @@
       <form
         (ngSubmit)="onSubmit(f)"
         #f="ngForm">
+        <mat-form-field class="w-100">
+          <mat-select required
+            name="recipe"
+            placeholder="Recipe"
+            [(ngModel)]="orderEntity.recipe.id"
+            (selectionChange)="onRecipeChange($event.value)"
+            #recipeSelect="ngModel">
+            <mat-option *ngFor="let recipe of recipes"
+              [value]="recipe.id">
+              {{ recipe.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field class="w-100">
           <input required
             matInput
@@ -87,7 +101,7 @@
             <button
               mat-raised-button
               type="button"
-              routerLink="/orders">
+              [routerLink]="['/clients', orderEntity.clientId.id, 'orders']">
               Cancel</button>
           </div>
         </div>

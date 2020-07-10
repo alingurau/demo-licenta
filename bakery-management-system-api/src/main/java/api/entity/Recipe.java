@@ -14,11 +14,7 @@ public class Recipe extends BaseEntity {
     private String description;
     private String imagePath;
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ingredients")
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @Transient
-    private List<Ingredient> ingredients = new ArrayList<>();
+//    private transient List<Ingredient> ingredients = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -44,12 +40,12 @@ public class Recipe extends BaseEntity {
         this.imagePath = imagePath;
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
+//    public List<Ingredient> getIngredients() {
+//        return ingredients;
+//    }
+//
+//    public void setIngredients(List<Ingredient> ingredients) {
+//        this.ingredients = ingredients;
+//    }
 }
 

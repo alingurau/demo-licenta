@@ -47,7 +47,7 @@ public class UserController extends RestImplementation<UserRepository, User> {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(method = POST, value = "/listSuperUserByTerm")
-    public Collection<User> listSalesManByTerm(@RequestBody @Valid ListBySuperUserTerm data){
+    public Collection<User> listSuperUserByTerm(@RequestBody @Valid ListBySuperUserTerm data){
 
         return this.userRepository.findByTerm(data.getTerm(), Role.SUPERUSER);
 

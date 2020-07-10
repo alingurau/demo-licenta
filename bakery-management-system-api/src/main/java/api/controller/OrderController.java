@@ -10,6 +10,7 @@ import api.rest.BaseLogger;
 import api.rest.RestImplementation;
 import api.service.EntityUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,21 +42,28 @@ public class OrderController extends RestImplementation<OrderRepository, Order> 
         this.orderRepository = orderRepository;
     }
 
-    @RequestMapping(method = GET, value = "/list")
-    public List<Order> readAllOrders() {
-        List<Order> orders = new ArrayList<>();
-
-        orderRepository.findAll().forEach(orders::add);
-
-        return orders;
-    }
-
-
     @RequestMapping(method=GET, value = "/{id}")
     public Optional<Order> getOne(@PathVariable(value = "id") long id) {
         Optional<Order> order = this.orderRepository.findById(id);
 
+        if (!(this.hasAccessToEntity(order, null))) {
+            throw new RestExceptions.BadRequest("Order does not exist");
+        }
+
         return order;
+    }
+
+    @RequestMapping(method = GET, value = "/listByUserId/{id}")
+    public Collection<Order> listByUserId(@PathVariable(value = "id") long id){
+
+        Optional<User> user = this.userRepository.findById(id);
+
+        if (!user.isPresent()) {
+            throw new RestExceptions.BadRequest("User does not exist");
+        }
+
+        return this.orderRepository.findAllOrdersByUserId(user.get());
+
     }
 
     @RequestMapping(method = POST)
@@ -86,6 +94,53 @@ public class OrderController extends RestImplementation<OrderRepository, Order> 
         }
     }
 
+    @RequestMapping(method = GET, value = "/listByClientId/{id}")
+    public Collection<Order> listByClientId(@PathVariable(value = "id") long id) throws Exception{
+
+        Optional<Client> client = this.clientRepository.findById(id);
+
+        if(!client.isPresent()){
+            throw new RestExceptions.BadRequest("Client does not exist");
+        }
+
+        return this.orderRepository.findAllByClientId(client.get());
+
+    }
+
+    @RequestMapping(method = DELETE, value = "/{id}")
+    public Order delete(@PathVariable(value = "id") long id) {
+
+        Optional<Order> order = this.orderRepository.findById(id);
+
+        if (!(this.hasAccessToEntity(order, null))) {
+            throw new RestExceptions.BadRequest("Order does not exist");
+        }
+
+        if (order.isPresent()) {
+            try{
+                this.orderRepository.delete(order.get());
+                return order.get();
+            } catch (Exception e){
+                BaseLogger.log(RestImplementation.class).error(e.getMessage());
+                throw new RestExceptions.OperationFailed(e.getMessage());
+            }
+        } else {
+            String msg = "Entity does not exist";
+            BaseLogger.log(RestImplementation.class).error(msg);
+            throw new RestExceptions.EntityNotFoundException(msg);
+        }
+
+    }
+
+    @RequestMapping(method = GET, value = "/list")
+    public List<Order> readAllOrders() {
+        List<Order> orders = new ArrayList<>();
+
+        orderRepository.findAll().forEach(orders::add);
+
+        return orders;
+    }
+
     @RequestMapping(method = PATCH, value = "/{id}")
     @Override
     public Order update(@RequestBody Order data, @PathVariable(value = "id") long id) {
@@ -105,52 +160,20 @@ public class OrderController extends RestImplementation<OrderRepository, Order> 
 
     }
 
-
-    @RequestMapping(method = GET, value = "/listByClientId/{id}")
-    public Collection<Order> listByClientId(@PathVariable(value = "id") long id) throws Exception{
-
-        Optional<Client> client = this.clientRepository.findById(id);
-
-        if(!client.isPresent()){
-            throw new RestExceptions.BadRequest("Client does not exist");
+    private boolean hasAccessToEntity(Optional<Order> order, User user) {
+        if (user == null) {
+            String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userRepository.findByUsername(username);
         }
 
-        return this.orderRepository.findAllByClientId(client.get());
+        Optional<Client> client = this.clientRepository.findById(order.get().getClientId().getId());
 
-    }
+        return client.isPresent() &&
+                (
+                        (client.get().getUserId().getId() == user.getId() && user.getRole().toString().equals("SUPERUSER")) ||
+                                user.getRole().toString().equals("ADMIN")
 
-    @RequestMapping(method = GET, value = "/listByUserId/{id}")
-    public Collection<Order> listByUserId(@PathVariable(value = "id") long id){
-
-        Optional<User> user = this.userRepository.findById(id);
-
-        if (!user.isPresent()) {
-            throw new RestExceptions.BadRequest("User does not exist");
-        }
-
-        return this.orderRepository.findAllOrdersByUserId(user.get());
-
-    }
-
-    @RequestMapping(method = DELETE, value = "/{id}")
-    public Order delete(@PathVariable(value = "id") long id){
-
-        Optional<Order> order = this.orderRepository.findById(id);
-
-        if(order.isPresent()){
-            try{
-                this.orderRepository.delete(order.get());
-                return order.get();
-            } catch (Exception e){
-                BaseLogger.log(RestImplementation.class).error(e.getMessage());
-                throw new RestExceptions.OperationFailed(e.getMessage());
-            }
-        } else {
-            String msg = "Entity does not exist";
-            BaseLogger.log(RestImplementation.class).error(msg);
-            throw new RestExceptions.EntityNotFoundException(msg);
-        }
-
+                );
     }
 
 }

@@ -190,8 +190,8 @@ export class RequestManager {
   createOrder(order: any): Observable<any> {
     const data = {... order};
 
-    if (typeof data.userId !== 'object') {
-      data.userId = { id: data.userId };
+    if (typeof data.clientId !== 'object') {
+      data.clientId = { id: data.clientId };
     }
 
     return this.http.post(`${environment.API_URL}/order`, data);
@@ -214,14 +214,15 @@ export class RequestManager {
   }
 
   getRecipe(id: number): Observable<any> {
-    return this.http.get(`${environment.API_URL}/recipe/${id}`).map((data: any) => {
+    return this.http.get(`${environment.API_URL}/recipe/${id}`);
+    // .map((data: any) => {
 
-      if (typeof data.userId === 'object') {
-        data.userId = data.userId.id;
-      }
+    //   if (typeof data.userId === 'object') {
+    //     data.userId = data.userId.id;
+    //   }
 
-      return data;
-    });
+    //   return data;
+    // });
   }
 
   createRecipe(recipe: any): Observable<any> {

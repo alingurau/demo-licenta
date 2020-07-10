@@ -20,7 +20,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class MyOrdersComponent extends SelfUnsubscribe implements OnInit, OnDestroy {
 
-  entity: User;
+  superUserEntity: User;
   displayedColumns = ['position', 'name', 'description', 'start', 'end', 'recipe', 'client', 'actions'];
   dataSource: MatTableDataSource<Order>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,7 +29,6 @@ export class MyOrdersComponent extends SelfUnsubscribe implements OnInit, OnDest
   constructor(
     private orderService: OrderService,
     private userService: UserService,
-    private clientService: ClientService,
     private route: ActivatedRoute
   ) {
     super();
@@ -48,9 +47,8 @@ export class MyOrdersComponent extends SelfUnsubscribe implements OnInit, OnDest
 
   getOrders() {
     const userService = this.userService.getUser().subscribe((user: User) => {
-      this.entity = user;
-      console.log(this.entity);
-        const orderSubscr = this.orderService.getAllOrdersByUserId(this.entity.id).subscribe((data: any[]) => {
+      this.superUserEntity = user;
+        const orderSubscr = this.orderService.getAllOrdersByUserId(this.superUserEntity.id).subscribe((data: any[]) => {
           data.map((item, index) => {
             item.position = ++index;
           });

@@ -60,7 +60,7 @@
           <ng-container matColumnDef="recipe">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Recipe</mat-header-cell>
             <mat-cell *matCellDef="let row">
-              {{ row.recipe }}
+              {{ row.recipe.name }}
               <!-- <a [routerLink]="['/clients', +row.clientId.id, 'orders']">
                 {{ row.clientId.name }}
               </a> -->
@@ -71,9 +71,9 @@
           <ng-container matColumnDef="client">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Client</mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <!-- <a [routerLink]="['/clients', +row.clientId.id, 'orders']">
-                {{ row.clientId.name }}
-              </a> -->
+            <a [routerLink]="['/clients', +row.clientId.id, 'orders']">
+              {{ row.clientId.firstName }} {{ row.clientId.lastName}}
+            </a>
             </mat-cell>
           </ng-container>
 

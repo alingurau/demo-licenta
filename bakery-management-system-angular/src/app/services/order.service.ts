@@ -17,7 +17,7 @@ export class OrderService extends SelfUnsubscribe {
     super();
   }
 
-  getOrders(clientID: number): Observable<Array<Order>> {
+  getOrders(clientID: number): Observable<Order[]> {
     return new Observable<Order[]>((observer: Observer<Order[]>) => {
       const subscr = this.requestManager.getOrdersByClientId(clientID)
         .subscribe(

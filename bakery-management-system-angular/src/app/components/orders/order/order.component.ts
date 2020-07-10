@@ -64,7 +64,7 @@ export class OrderComponent extends SelfUnsubscribe implements OnInit, OnDestroy
     this.addSubscription(paramSubscr);
   }
 
-  deleteLicense(id: number) {
+  deleteOrder(id: number) {
     const deleteSubscr = this.orderService.deleteOrder(id).subscribe((response: boolean) => {
       if (response) {
         this.getOrders();

@@ -1,8 +1,6 @@
 package api.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,8 +22,7 @@ public class Client extends BaseEntity {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User userId;
 
-    @OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(orphanRemoval=true, mappedBy = "clientId")
     private List<Order> orders;
 
     public String getFirstName() {
@@ -74,13 +71,5 @@ public class Client extends BaseEntity {
 
     public void setUserId(User userId) {
         this.userId = userId;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 }

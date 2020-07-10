@@ -1,5 +1,6 @@
 package api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -14,20 +15,15 @@ public class Order extends BaseEntity {
     private Date start;
     private Date end;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-//    private User userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Recipe recipe;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Client clientId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Recipe recipe;
 
     public String getName() {
         return name;
@@ -77,11 +73,4 @@ public class Order extends BaseEntity {
         this.recipe = recipe;
     }
 
-//    public User getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(User userId) {
-//        this.userId = userId;
-//    }
 }

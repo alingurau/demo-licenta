@@ -9,5 +9,5 @@ import java.util.Collection;
 
 @Repository
 public interface IngredientRepository extends CrudRepository<Ingredient, Long> {
-    Collection<Ingredient> findAllByRecipeId(Recipe recipe);
+//    Collection<Ingredient> findAllByRecipeId(Recipe recipe);
 }

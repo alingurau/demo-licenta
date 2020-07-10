@@ -9,10 +9,10 @@ export class Order {
   position = 0;
 
   constructor(data: any) {
-      for (const prop in data) {
-        if (data.hasOwnProperty(prop)) {
-          this[prop] = data[prop];
-        }
+    for (const prop in data) {
+      if (data.hasOwnProperty(prop)) {
+        this[prop] = data[prop];
       }
     }
+  }
 }

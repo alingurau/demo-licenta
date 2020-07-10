@@ -70,18 +70,19 @@
           ></textarea>
         </mat-form-field>
 
-        <mat-form-field class="w-100">
-          <input matInput
+        <!-- <mat-form-field class="w-100"> -->
+          <!-- <input matInput
                   placeholder="Entry Date"
-                  required
                   [value]="date.begin | date:'medium'"
-                  disabled>
-        </mat-form-field>
+                  disabled> -->
+                  <!-- <input mdc-datetime-picker="order.start" date="true" time="true" type="text" id="datetime"
+                  placeholder="Date" show-todays-date="" minutes="true" min-date="date" show-icon="true"
+                  ng-model="dateTime" class="dtp-no-msclear dtp-input md-input"> -->
+        <!-- </mat-form-field> -->
 
-        <mat-form-field class="w-100">
+        <!-- <mat-form-field class="w-100">
           <input matInput
                   placeholder="Due Date"
-                  required
                   [satDatepicker]="picker"
                   (dateChange)="onDateChange($event)"
                   [value]="date.end | date:'medium'"
@@ -89,7 +90,7 @@
                 <sat-datepicker #picker [rangeMode]="false" disabled="false">
                 </sat-datepicker>
                 <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-        </mat-form-field>
+        </mat-form-field> -->
         <!-- <mat-form-field>
           <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl"
             [min]="minDate" [max]="maxDate" [disabled]="disabled" [value]="date.end">

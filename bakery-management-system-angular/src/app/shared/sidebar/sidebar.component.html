@@ -43,6 +43,15 @@
     (click)="toggleSidebar()">
     <i class="fa fa-fw fa-list"></i>&nbsp; Recipes
   </a>
+  <a
+    mat-button
+    *ngIf="!isAdmin"
+    [routerLink]="['/stocks']"
+    [routerLinkActive]="['router-link-active']"
+    class="list-group-item text-left"
+    (click)="toggleSidebar()">
+    <i class="fa fa-fw fa-bar-chart"></i>&nbsp; Stocks
+  </a>
     <div class="header-fields">
       <div class="nested-menu">
         <a mat-button

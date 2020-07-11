@@ -20,6 +20,47 @@ export class RecipeItemComponent extends SelfUnsubscribe implements OnInit {
   // @Input() id: number;
 
   recipeEntity = {} as Recipe;
+  ingredients = [{
+    'name': 'oua',
+    'amount': 4,
+    'unitMeasure': 'buc'
+  },
+  {
+    'name': 'ulei',
+    'amount': 5,
+    'unitMeasure': 'linguri'
+  },
+  {
+    'name': 'zahar',
+    'amount': 2,
+    'unitMeasure': 'cesti'
+  },
+  {
+    'name': 'faina',
+    'amount': 2,
+    'unitMeasure': 'cesti'
+  },
+  {
+    'name': 'apa rece',
+    'amount': 5,
+    'unitMeasure': 'linguri'
+  },
+  {
+    'name': 'frisca',
+    'amount': 300,
+    'unitMeasure': 'ml'
+  },
+  {
+    'name': 'ciocolata alba',
+    'amount': 300,
+    'unitMeasure': 'gr'
+  },
+
+  {
+    'name': 'apa',
+    'amount': 200,
+    'unitMeasure': 'ml'
+  }];
 
   constructor(
     private recipeService: RecipeService,
@@ -41,15 +82,18 @@ export class RecipeItemComponent extends SelfUnsubscribe implements OnInit {
 
   getRecipe() {
     const recipeID = this.id;
-    console.log(recipeID)
+    console.log(this.recipeEntity.ingredients)
+    console.log(this.ingredients)
+    // if (this.recipeEntity) {
+
+    //   Object.assign(this.recipeEntity.ingredients, this.ingredients);
+    // }
+    console.log(this.recipeEntity.ingredients)
+    // this.recipeEntity.ingredients.push(this.ingredients);
       const recipeSubscr = this.recipeService.getRecipe(recipeID).subscribe((recipe: Recipe) => {
-        console.log(recipe)
         this.recipeEntity = recipe;
-        console.log(this.recipeEntity)
       });
       this.addSubscription(recipeSubscr);
-      console.log(this.recipeEntity)
-
   }
 
 }

@@ -13,14 +13,24 @@
             style="max-height: 300px;">
         </div>
         <div class="col-xs-12 pl-5" style="text-emphasis-color: cornsilk;">
-          <h4>Description</h4>
-          <p>{{ recipeEntity.description }}</p>
+          <h4>Ingredients</h4>
+          <div class="row">
+            <div class="col-xs-12">
+              <mat-list role="list-group">
+                <mat-list-item role="list-group-item"
+                  *ngFor="let ingredient of ingredients">
+                  {{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.unitMeasure }}
+              </mat-list-item>
+              </mat-list>
+            </div>
+            </div>
         </div>
       </div>
  <hr>
       <div class="row">
         <div class="col-xs-12">
-        <h4>Ingredients</h4>
+          <h4>Description</h4>
+          <p>{{ recipeEntity.description }}</p>
         </div>
       </div>
 

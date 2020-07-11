@@ -289,4 +289,54 @@ export class RequestManager {
   getIngredientsByRecipeId(recipeId: number): Observable<any> {
     return this.http.get(`${environment.API_URL}/ingredient/listByRecipeId/${recipeId}`);
   }
+
+    // ==========================================================================
+
+  // STOCK
+
+  getStocksList(superUserID: number): Observable<any> {
+    return this.http.get(`${environment.API_URL}/stock/listByUserId/${superUserID}`).map((data: any[]) => {
+      for (const d of data) {
+        if (typeof d.userId === 'object') {
+          d.userId = d.userId.id;
+        }
+      }
+      return data;
+    });
+  }
+
+  getStock(stockID: number): Observable<any> {
+    return this.http.get(`${environment.API_URL}/stock/${stockID}`).map((data: any) => {
+
+      if (typeof data.userId === 'object') {
+        data.userId = data.userId.id;
+      }
+
+      return data;
+    });
+  }
+
+  createStock(stock: any): Observable<any> {
+    const data = {... stock};
+
+    if (typeof data.userId !== 'object') {
+      data.userId = { id: data.userId };
+    }
+
+    return this.http.post(`${environment.API_URL}/stock`, data);
+  }
+
+  updateStock(stock: any, id: number): Observable<any> {
+    const data = {... stock};
+
+    if (typeof data.userId !== 'object') {
+      data.userId = { id: data.userId };
+    }
+
+    return this.http.patch(`${environment.API_URL}/stock/${id}`, data);
+  }
+
+  deleteStock(id: number): Observable<any> {
+    return this.http.delete(`${environment.API_URL}/stock/${id}`);
+  }
 }

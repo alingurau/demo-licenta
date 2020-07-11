@@ -27,6 +27,7 @@ import { OrdersModule } from './components/orders/orders.module';
 import { RecipesModule } from './components/recipes/recipes.module';
 import { IngredientsModule } from './components/ingredients/ingredients.module';
 import { SuperUserModule } from './components/super-user/super-user.module';
+import { StocksModule } from './components/stocks/stocks.module';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { SuperUserModule } from './components/super-user/super-user.module';
     MessagesModule,
     DashboardModule,
     ClientsModule,
+    StocksModule,
     OrdersModule,
     RecipesModule,
     IngredientsModule,

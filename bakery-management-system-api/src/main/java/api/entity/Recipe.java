@@ -3,7 +3,6 @@ package api.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +13,13 @@ public class Recipe extends BaseEntity {
     private String description;
     private String imagePath;
 
-//    private transient List<Ingredient> ingredients = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private User userId;
+
+    @OneToMany(orphanRemoval=true, mappedBy = "recipeId")
+    private List<Ingredient> ingredients;
 
     public String getName() {
         return name;
@@ -38,6 +43,14 @@ public class Recipe extends BaseEntity {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
 //    public List<Ingredient> getIngredients() {

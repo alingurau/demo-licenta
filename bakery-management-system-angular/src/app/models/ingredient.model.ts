@@ -1,6 +1,6 @@
 export class Ingredient {
-    id: number;
-    recipeId = 0;
+    id: 0;
+    recipeId: 0;
     name: string;
     amount: number;
     unitMeasure: string;

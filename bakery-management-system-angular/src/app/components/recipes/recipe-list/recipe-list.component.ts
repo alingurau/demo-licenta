@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ClientService } from 'src/app/services/client.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { SelfUnsubscribe } from 'src/app/shared/self-unsubscribe';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Recipe } from 'src/app/models/recipe.model';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
@@ -13,6 +16,9 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 })
 export class RecipeListComponent extends SelfUnsubscribe implements OnInit, OnDestroy {
 
+  superUserID: number;
+  superUserEntity: User;
+  isAdmin: boolean;
   recipes: Recipe[];
 
 
@@ -22,6 +28,7 @@ export class RecipeListComponent extends SelfUnsubscribe implements OnInit, OnDe
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
+    private userService: UserService,
     private recipeService: RecipeService,
     private route: ActivatedRoute
   ) {
@@ -29,7 +36,32 @@ export class RecipeListComponent extends SelfUnsubscribe implements OnInit, OnDe
    }
 
   ngOnInit() {
-    this.getRecipes();
+    // this.getRecipes();
+    const paramSubcr = this.route.params.subscribe((params: Params) => {
+      let userSubcr: Subscription;
+
+      if ('superUserID' in params) {
+        this.superUserID = params.superUserID;
+        userSubcr = this.userService.loadUser(+params.superUserID).subscribe((user: User | boolean) => {
+          if (user) {
+            this.superUserEntity = <User>user;
+          }
+          this.getRecipes();
+        });
+      } else {
+        userSubcr = this.userService.getUser().subscribe((user: User) => {
+          this.superUserID = user.id;
+          this.superUserEntity = user;
+          this.getRecipes();
+        });
+      }
+
+      this.addSubscription(userSubcr);
+    });
+
+    this.isAdmin = this.userService.isAdmin();
+
+    this.addSubscription(paramSubcr);
   }
 
   applyFilter(filterValue: string) {
@@ -39,17 +71,30 @@ export class RecipeListComponent extends SelfUnsubscribe implements OnInit, OnDe
     this.dataSource.filter = filterValue;
   }
 
+  // getRecipes() {
+  //   const recipeSubscr = this.recipeService.getRecipes().subscribe((recipes: Recipe[]) => {
+  //     recipes.map((item, index) => {
+  //       item.position = ++index;
+  //       this.recipes = recipes;
+  //     });
+  //     this.dataSource = new MatTableDataSource(recipes);
+  //     this.dataSource.paginator = this.paginator;
+  //     this.dataSource.sort = this.sort;
+  //   });
+  //   this.addSubscription(recipeSubscr);
+  // }
+
   getRecipes() {
-    const recipeSubscr = this.recipeService.getRecipes().subscribe((recipes: Recipe[]) => {
+    const recipesSubscr = this.recipeService.getRecipesList(+this.superUserEntity.id).subscribe((recipes: Recipe[]) => {
       recipes.map((item, index) => {
         item.position = ++index;
-        this.recipes = recipes;
       });
+
       this.dataSource = new MatTableDataSource(recipes);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-    this.addSubscription(recipeSubscr);
+    this.addSubscription(recipesSubscr);
   }
 
   deleteClient(id: number) {

@@ -1,7 +1,7 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="superUserEntity && recipeEntity">
   <div class="row">
     <div class="col-xl-12">
-        <h2>Create New Recipe</h2>
+        <h2>{{ title }}</h2>
     </div>
   </div>
 
@@ -10,6 +10,31 @@
       <form
         (ngSubmit)="onSubmit(f)"
         #f="ngForm">
+        <input
+          type="hidden"
+          [(ngModel)]="recipeEntity.id"
+          name="id"
+          *ngIf="editStatus !== status.newContent"
+          disabled
+        >
+
+        <div class="row" *ngIf="isAdmin">
+          <div class="col-12">
+            <mat-form-field class="w-100">
+              <mat-select required
+                [(ngModel)]="recipeEntity.userId"
+                name="userId"
+                [disabled]="!isAdmin"
+                placeholder="SuperUser"
+                [(value)]="superUserEntity.id">
+                <mat-option *ngFor="let superUser of superUsers"
+                  [value]="superUser.id">
+                  {{ superUser.nameToShow }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
 
         <mat-form-field class="w-100">
           <input
@@ -18,7 +43,7 @@
             matAutosizeMinRows="2"
             type="text"
             id="input-name"
-            [(ngModel)]="recipe.name"
+            [(ngModel)]="recipeEntity.name"
             name="name"
             placeholder="Name"
             required
@@ -30,7 +55,7 @@
             matInput
             type="text"
             id="input-description"
-            [(ngModel)]="recipe.description"
+            [(ngModel)]="recipeEntity.description"
             name="description"
             placeholder="Description"
             required
@@ -44,21 +69,153 @@
             matTextareaAutosize
             matAutosizeMinRows="2"
             type="text"
-            id="input-imagePath"
-            [(ngModel)]="recipe.imagePath"
+            id="imagePath"
+            [(ngModel)]="recipeEntity.imagePath"
             name="imagePath"
             placeholder="Image Path"
             required
+            #imagePath
           >
         </mat-form-field>
+        <div class="row">
+          <div class="col-xs-12">
+            <img [src]="imagePath.value" class="img-responsive">
+          </div>
+        </div>
 
+        <!-- <div class="row">
+          <div class="col-md-4">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                matTextareaAutosize
+                matAutosizeMinRows="2"
+                type="text"
+                id="ingredientName"
+                [(ngModel)]="ingredient.name"
+                name="ingredientName"
+                placeholder="Name"
+              >
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                matTextareaAutosize
+                matAutosizeMinRows="2"
+                type="number"
+                id="amount"
+                [(ngModel)]="ingredient.amount"
+                name="amount"
+                placeholder="Amount"
+              >
+            </mat-form-field>
+          </div>
+          <div class="col-md-4">
+            <mat-form-field class="w-100">
+              <input
+                matInput
+                matTextareaAutosize
+                matAutosizeMinRows="2"
+                type="text"
+                id="unitMeasure"
+                [(ngModel)]="ingredient.unitMeasure"
+                name="unitMeasure"
+                placeholder="Unit Measure"
+              >
+            </mat-form-field>
+          </div>
+        </div>
+        <hr>
+          <div class="row">
+            <div class="col-xs-12">
+              <button
+                mat-raised-button color="primary"
+                type="button"
+                (click)="onAddIngredient()">Add Ingredient</button>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-12">
+              <button class="mr-3"
+                type="submit"
+                mat-raised-button color="primary"
+                [disabled]="!f.valid">
+                Save
+              </button>
+              <button
+                mat-raised-button
+                type="button"
+                *ngIf="!isAdmin"
+                [routerLink]="['/recipes']">
+                Cancel
+              </button>
+              <button
+                mat-raised-button
+                type="button"
+                *ngIf="isAdmin"
+                [routerLink]="['/superUsers', superUserEntity.id, 'recipes']">
+                Cancel
+              </button>
+            </div>
+          </div>
       </form>
     </div> 
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <app-ingredient-create [ingredients]="recipe.ingredients"></app-ingredient-create>
-  </div>
-  <div class="row">
+  </div> -->
+  <!-- <div class="row">
+    <div class="col-xs-12">
+      <form [formGroup]="recipeForm" >
+      <div class="row">
+        <div class="col-xs-12" formArrayName="ingredients">
+          <div
+            class="row"
+            *ngFor="let ingredientCtrl of recipeForm.get('ingredients').controls; let i = index"
+            [formGroupName]="i"
+            style="margin-top: 10px;">
+            <div class="col-xs-8">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="name">
+            </div>
+            <div class="col-xs-2">
+              <input
+                type="number"
+                class="form-control"
+                formControlName="amount">
+            </div>
+            <div class="col-xs-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="unitMeasure">
+            </div>
+            <div class="col-xs-2">
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="onDeleteIngredient(i)">X</button>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-xs-12">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="onAddIngredient()">Add Ingredient</button>
+            </div>
+          </div>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div> -->
+  <!-- <div class="row">
       <div class="col-xs-2 p-2">
         <button
           mat-raised-button color="primary"
@@ -72,5 +229,5 @@
           [routerLink]="['..']">
           Cancel</button>
       </div>
-  </div>
+  </div> -->
 </div>

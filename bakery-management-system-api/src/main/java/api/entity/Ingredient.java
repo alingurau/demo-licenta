@@ -1,18 +1,20 @@
 package api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Ingredient extends BaseEntity {
 
-    @NotBlank
     private String name;
-    @NotNull
     private int amount;
-    @NotBlank
     private String unitMeasure;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Recipe recipeId;
 
     public String getName() {
         return name;
@@ -36,6 +38,14 @@ public class Ingredient extends BaseEntity {
 
     public void setUnitMeasure(String unitMeasure) {
         this.unitMeasure = unitMeasure;
+    }
+
+    public Recipe getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(Recipe recipeId) {
+        this.recipeId = recipeId;
     }
 
 }

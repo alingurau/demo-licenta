@@ -213,16 +213,29 @@ export class RequestManager {
     return this.http.get(`${environment.API_URL}/recipe/listAll`);
   }
 
-  getRecipe(id: number): Observable<any> {
-    return this.http.get(`${environment.API_URL}/recipe/${id}`);
-    // .map((data: any) => {
+  getRecipesList(superUserID: number): Observable<any> {
+    return this.http.get(`${environment.API_URL}/recipe/listByUserId/${superUserID}`).map((data: any[]) => {
+      for (const d of data) {
+        if (typeof d.userId === 'object') {
+          d.userId = d.userId.id;
+        }
+      }
+      return data;
+    });
+  }
 
-    //   if (typeof data.userId === 'object') {
-    //     data.userId = data.userId.id;
-    //   }
+  getRecipe(recipeID: number): Observable<any> {
+    return this.http.get(`${environment.API_URL}/recipe/${recipeID}`).map((data: any) => {
 
-    //   return data;
-    // });
+      if (typeof data.userId === 'object') {
+        data.userId = data.userId.id;
+      }
+
+      return data;
+    });
+  }
+  getRecipeItem(recipeID: number): Observable<any> {
+    return this.http.get(`${environment.API_URL}/recipe/${recipeID}`);
   }
 
   createRecipe(recipe: any): Observable<any> {

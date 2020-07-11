@@ -2,6 +2,7 @@ import { Ingredient } from './ingredient.model';
 
 export class Recipe {
   id = 0;
+  userId: any;
   name = '';
   description = '';
   imagePath = '';

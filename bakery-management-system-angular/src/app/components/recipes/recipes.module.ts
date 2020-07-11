@@ -30,7 +30,7 @@ const routes: Routes = [
         data: { newContent: true, ownClient: true }
       },
       {
-        path: 'recipes/:id/edit', component: RecipeEditComponent, canActivate: [LoggedInGuard, IsSuperUserGuard],
+        path: 'recipes/:id/edit', component: RecipeCreateComponent, canActivate: [LoggedInGuard, IsSuperUserGuard],
         data: { newContent: false, ownClient: true }
       },
       {

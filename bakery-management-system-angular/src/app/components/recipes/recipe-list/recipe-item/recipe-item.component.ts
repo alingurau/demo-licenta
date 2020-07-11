@@ -14,13 +14,12 @@ import { FormGroup } from '@angular/forms';
 export class RecipeItemComponent extends SelfUnsubscribe implements OnInit {
 
   // recipe: Observable<Recipe>;
-  // id: number;
+  id: number;
 
-  @Input() recipe: Observable<Recipe>;
-  @Input() id: number;
+  // @Input() recipe: Observable<Recipe>;
+  // @Input() id: number;
 
-  recipeForm: FormGroup;
-
+  recipeEntity = {} as Recipe;
 
   constructor(
     private recipeService: RecipeService,
@@ -35,9 +34,22 @@ export class RecipeItemComponent extends SelfUnsubscribe implements OnInit {
     .subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        this.recipe = this.recipeService.getRecipe(this.id);
       }
     );
+    this.getRecipe();
+  }
+
+  getRecipe() {
+    const recipeID = this.id;
+    console.log(recipeID)
+      const recipeSubscr = this.recipeService.getRecipe(recipeID).subscribe((recipe: Recipe) => {
+        console.log(recipe)
+        this.recipeEntity = recipe;
+        console.log(this.recipeEntity)
+      });
+      this.addSubscription(recipeSubscr);
+      console.log(this.recipeEntity)
+
   }
 
 }

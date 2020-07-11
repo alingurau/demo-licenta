@@ -18,6 +18,27 @@ export class RecipeService extends SelfUnsubscribe{
     super();
   }
 
+  getRecipesList(superUserID): Observable<Array<Recipe>> {
+    return new Observable<Array<Recipe>>((observer: Observer<Array<Recipe>>) => {
+      const subscr = this.requestManager.getRecipesList(superUserID)
+        .subscribe(
+          (response) => {
+            const recipes: Recipe[] = [];
+            for (const recipeData of response) {
+              recipes.push(new Recipe(recipeData));
+            }
+            observer.next(recipes);
+          },
+          (err) => {
+            observer.next([]);
+            this.messageService.showMessage(err.error.message, 'danger');
+          }
+        );
+
+      this.addSubscription(subscr);
+    });
+  }
+
     getRecipes(): Observable<Array<Recipe>> {
       return new Observable<Array<Recipe>>((observer: Observer<Array<Recipe>>) => {
         const subscr = this.requestManager.getRecipes()
@@ -39,9 +60,9 @@ export class RecipeService extends SelfUnsubscribe{
       });
     }
   
-    getRecipe(id: number): Observable<Recipe> {
+    getRecipe(recipeID: number): Observable<Recipe> {
       return new Observable<Recipe>((observer: Observer<Recipe>) => {
-        const subscr = this.requestManager.getRecipe(id)
+        const subscr = this.requestManager.getRecipeItem(recipeID)
           .subscribe(
             (response) => {
               const recipe = new Recipe(response);

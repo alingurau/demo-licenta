@@ -41,44 +41,62 @@
             </mat-form-field>
           </div> -->
         </div>
-
-        <mat-form-field class="w-100">
-          <textarea
-            matInput
-            matTextareaAutosize
-            matAutosizeMinRows="2"
-            type="text"
-            id="input-name"
-            [(ngModel)]="order.name"
-            name="name"
-            placeholder="Name"
-            required
-          ></textarea>
-        </mat-form-field>
-
-        <mat-form-field class="w-100">
-          <textarea
-            matInput
-            matTextareaAutosize
-            matAutosizeMinRows="2"
-            type="text"
-            id="input-description"
-            [(ngModel)]="order.description"
-            name="description"
-            placeholder="Description"
-            required
-          ></textarea>
-        </mat-form-field>
-
-        <!-- <mat-form-field class="w-100"> -->
-          <!-- <input matInput
-                  placeholder="Entry Date"
-                  [value]="date.begin | date:'medium'"
-                  disabled> -->
-                  <!-- <input mdc-datetime-picker="order.start" date="true" time="true" type="text" id="datetime"
-                  placeholder="Date" show-todays-date="" minutes="true" min-date="date" show-icon="true"
-                  ng-model="dateTime" class="dtp-no-msclear dtp-input md-input"> -->
-        <!-- </mat-form-field> -->
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <textarea
+                matInput
+                matTextareaAutosize
+                matAutosizeMinRows="2"
+                type="text"
+                id="input-name"
+                [(ngModel)]="order.name"
+                name="name"
+                placeholder="Name"
+                required
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <textarea
+                matInput
+                matTextareaAutosize
+                matAutosizeMinRows="2"
+                type="text"
+                id="input-description"
+                [(ngModel)]="order.description"
+                name="description"
+                placeholder="Description"
+                required
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+              <input matInput
+                      placeholder="Entry Date"
+                      [value]="order.start | date:'medium'"
+                      disabled> 
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-100">
+            <input matInput
+            type="datetime-local"
+            placeholder="Due Date"
+            [value]="order.end | date"
+            (input)="order.end=parseDate($event.target.value)"
+            >
+            </mat-form-field>
+          </div>
+        </div>
 
         <!-- <mat-form-field class="w-100">
           <input matInput

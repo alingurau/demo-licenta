@@ -36,7 +36,7 @@ export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnD
     begin: new Date,
     end: new Date
   };
-  today = Date.now().toLocaleString;
+  today = Date.now();
   dateFormat: Date;
 
   constructor(
@@ -89,9 +89,15 @@ export class OrderCreateComponent extends SelfUnsubscribe implements OnInit, OnD
     this.addSubscription(slsubscr);
   }
 
-  onDateChange(event: MatDatepickerInputEvent<Date>) {
+  onDateChange(event) {
     this.order.end = event.value['end'];
   }
+  parseDate(dateString: string): Date {
+    if (dateString) {
+        return new Date(dateString);
+    }
+    return null;
+}
 
   onSubmit(form: NgForm) {
     if (form.valid) {

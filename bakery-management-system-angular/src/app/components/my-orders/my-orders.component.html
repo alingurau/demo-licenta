@@ -42,17 +42,17 @@
   
           <!-- Start Column -->
           <ng-container matColumnDef="start">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Start </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Entry Date-Time </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              {{ row.start | date }}
+              {{ row.start | date:'medium' }}
             </mat-cell>
           </ng-container>
   
           <!-- Expire Column -->
           <ng-container matColumnDef="end">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Expire </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Due Date </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              {{ row.end | date }}
+              {{ row.end | date:'medium' }}
             </mat-cell>
           </ng-container>
 

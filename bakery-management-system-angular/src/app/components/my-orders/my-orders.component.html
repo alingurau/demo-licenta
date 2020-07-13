@@ -6,6 +6,9 @@
   </div>
 
   <br>
+  <button mat-raised-button color="primary" (click)="printPage()">print</button>
+  <button class="ml-1" mat-raised-button color="accent" (click)="captureScreen()">download to PDF</button>
+  <br>
 
   <div class="row">
       <div class="col-12">
@@ -15,7 +18,7 @@
       </div>
     </div>
       
-    <div class="row responsive-table">
+    <div class="row responsive-table" id="pdfTable" #pdfTable>
       <div class="col-12">
         <mat-table [dataSource]="dataSource" matSort>
           <!-- Position Column -->

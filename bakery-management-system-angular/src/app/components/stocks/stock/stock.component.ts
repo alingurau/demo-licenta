@@ -7,6 +7,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Stock } from 'src/app/models/stock.model';
 import { StockService } from 'src/app/services/stock.service';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-stock',
@@ -87,6 +89,52 @@ export class StockComponent extends SelfUnsubscribe implements OnInit, OnDestroy
       }
     });
   }
+
+  printPage() {
+    window.print();
+  }
+
+  public captureScreen() {
+    const data = document.getElementById('pdfTable');  //Id of the table
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      // const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      // const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png')
+      const pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save('MYPdf.pdf'); // Generated PDF
+    });
+  }
+
+  // generateReport() {
+  //   google.charts.load('current', {'packages':['corechart']});
+  //   google.charts.setOnLoadCallback(drawChart);
+
+  //   function drawChart() {
+
+  //     var data = google.visualization.arrayToDataTable([
+  //       ['Task', 'Hours per Day'],
+  //       ['Work',     11],
+  //       ['Eat',      2],
+  //       ['Commute',  2],
+  //       ['Watch TV', 2],
+  //       ['Sleep',    7]
+  //     ]);
+
+  //     var options = {
+  //       title: 'My Daily Activities'
+  //     };
+
+  //     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+  //     chart.draw(data, options);
+  //   }
+  // }
 
   ngOnDestroy() {
     this.dispose();

@@ -41,15 +41,10 @@ export class RecipeItemComponent extends SelfUnsubscribe implements OnInit {
 
   getRecipe() {
     const recipeID = this.id;
-    console.log(recipeID)
       const recipeSubscr = this.recipeService.getRecipe(recipeID).subscribe((recipe: Recipe) => {
-        console.log(recipe)
         this.recipeEntity = recipe;
-        console.log(this.recipeEntity)
       });
       this.addSubscription(recipeSubscr);
-      console.log(this.recipeEntity)
-
   }
 
 }

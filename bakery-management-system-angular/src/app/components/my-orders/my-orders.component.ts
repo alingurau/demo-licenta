@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { User } from '../../models/user.model';
 import { SelfUnsubscribe } from '../../shared/self-unsubscribe';
@@ -9,9 +9,9 @@ import {
 } from '@angular/material';
 import { Order } from 'src/app/models/order.model';
 import { OrderService } from 'src/app/services/order.service';
-import { ClientService } from 'src/app/services/client.service';
-import { Client } from 'src/app/models/client.model';
 import { UserService } from 'src/app/services/user.service';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-my-orders',
@@ -25,6 +25,7 @@ export class MyOrdersComponent extends SelfUnsubscribe implements OnInit, OnDest
   dataSource: MatTableDataSource<Order>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('pdfTable') pdfTable: ElementRef;
 
   constructor(
     private orderService: OrderService,
@@ -67,6 +68,27 @@ export class MyOrdersComponent extends SelfUnsubscribe implements OnInit, OnDest
       if (response) {
         this.getOrders();
       }
+    });
+  }
+
+  printPage() {
+    window.print();
+  }
+
+  public captureScreen() {
+    const data = document.getElementById('pdfTable');  //Id of the table
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      // const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      // const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png')
+      const pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save('MYPdf.pdf'); // Generated PDF
     });
   }
 

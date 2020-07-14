@@ -2,11 +2,15 @@
   <div class="row">
     <div class="col-xl-12">
       <h2>Recipe's Detail Page</h2>
-      <h3 *ngIf="recipeEntity">{{ recipeEntity.name }}</h3>
+  <button mat-raised-button color="primary" (click)="printPage()">print</button>
+  <button class="ml-1" mat-raised-button color="accent" (click)="captureScreen()">download to PDF</button>
+  <br>
+  <br>
 
-
-      <div class="row">
+      <div class="row" id="pdfTable" #pdfTable>
         <div class="col-xs-12">
+          <h3 *ngIf="recipeEntity">{{ recipeEntity.name }}</h3>
+
           <img
             [src]="recipeEntity.imagePath"
             class="img-responsive"
@@ -14,8 +18,17 @@
         </div>
         <div class="col-xs-12 pl-5" style="text-emphasis-color: cornsilk;">
           <h4>Ingredients</h4>
-          <p>{{ recipeEntity.ingredients }}</p>
-        </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <mat-list role="list-group">
+                <mat-list-item role="list-group-item"
+                  *ngFor="let ingredient of ingredients">
+                  {{ ingredient.name }} - {{ ingredient.amount }} {{ ingredient.unitMeasure }}
+              </mat-list-item>
+              </mat-list>
+            </div>
+            </div>
+          </div>
       </div>
       <hr>
       <div class="row">

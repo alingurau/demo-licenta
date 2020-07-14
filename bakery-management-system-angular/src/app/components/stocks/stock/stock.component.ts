@@ -20,6 +20,7 @@ export class StockComponent extends SelfUnsubscribe implements OnInit, OnDestroy
   superUserID: number;
   superUserEntity: User;
   isAdmin: boolean;
+  emptyProduct;
 
   displayedColumns = ['position', 'code', 'product', 'quantity', 'unitMeasure', 'actions'];
   dataSource: MatTableDataSource<Stock>;
@@ -73,7 +74,14 @@ export class StockComponent extends SelfUnsubscribe implements OnInit, OnDestroy
     const stocksSubscr = this.stockService.getStocks(+this.superUserEntity.id).subscribe((stocks: Stock[]) => {
       stocks.map((item, index) => {
         item.position = ++index;
+        stocks.forEach(element => {
+         this.emptyProduct = element.quantity;
+        });
       });
+      if (this.emptyProduct.quantity < 1) {
+        alert(this.emptyProduct.name + 'This product is not available');
+        return;
+      }
 
       this.dataSource = new MatTableDataSource(stocks);
       this.dataSource.paginator = this.paginator;

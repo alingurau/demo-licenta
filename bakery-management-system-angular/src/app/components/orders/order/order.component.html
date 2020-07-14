@@ -70,7 +70,9 @@
         <ng-container matColumnDef="recipe">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Recipe </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            {{ row.recipe.name }}
+            <a [routerLink]="['/recipe', +row.recipe.id, 'item']">
+              {{ row.recipe.name }}
+            </a>
           </mat-cell>
         </ng-container>
 
